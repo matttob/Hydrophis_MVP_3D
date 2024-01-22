@@ -1,0 +1,164 @@
+#root {
+  height: 100vh;
+}
+
+
+
+.about-main{
+  font-size: 18px;
+  font-family: 'Inter';
+  color : white!important;
+  background:transparent;
+  position: absolute; 
+  bottom: 50%;
+  left:50%
+}
+
+.map-container{
+  position: absolute; 
+  height: 100vh;
+  width: 100vw;
+  bottom: 0%;
+  left:0px;
+}
+
+.nav-bar{
+  position:absolute;
+  display: flex;
+  height: 75px;
+  width: 100vw;
+  top: 0%;
+  left:0px;
+  color : rgb(255, 255, 255);
+  background-color: rgba(0, 0, 0, 0.4);
+  overflow-y:hidden;
+  overflow-x:hidden;
+  z-index: 1000;
+  
+  
+    }
+  
+
+.nav-bar .trito-logo{
+  position: absolute;
+  top: 8px;
+  left: 20px;
+  height: 50px;
+  
+}
+
+.nav-bar .logo-text{
+  position: relative;
+  top: 40px;
+  left: 355px;
+  color: white;
+  font-family: 'Inter';
+  text-decoration: none
+}
+
+
+.nav-bar .nav-bar-text{
+  position: relative;
+  height: 60px;
+  left:75%;
+  display: flex;
+  align-items: center;
+  padding-block: 10px;
+}
+
+
+.nav-bar .nav-bar-text a {
+  /* justify-content: center; */
+  text-decoration: none;
+  font-family: 'Inter';
+  color: white;
+  padding: 5px 20px;
+  padding-block: 10px;
+}
+
+.nav-bar .nav-bar-text a:hover {
+  color: white;
+  text-decoration: underline;
+}
+
+.my-sliding-pane{ 
+  position: absolute!important;
+  height: 200px!important;
+  bottom:30%;
+  background:black!important;
+  opacity: 0.6;
+}
+
+
+.my-sliding-pane .slide-pane__title {
+  font-size: 18px;
+  font-weight: normal;
+  max-width: 80%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter';
+  color : white!important;
+  background:transparent;
+
+}
+
+.slide-pane__close {
+  margin-left: 24px;
+  padding: 16px;
+  cursor: pointer;
+  color: white;
+  opacity: 0.6;
+}
+
+.my-sliding-pane .slide-pane__header {
+  background:black!important;
+  opacity: 1!important;
+  border-bottom-color: white!important;
+  border-bottom-width: 2px
+}
+
+.my-sliding-pane .slide-pane__content {
+  font-family: 'Inter';
+  color : white!important;
+  opacity: 1!important;
+  border-top-color: white!important;
+}
+
+.bathy-checkBox{
+  position: absolute;
+  bottom:50px;
+  left: 50px;
+  ;
+}
+
+
+.date-slider-container{
+  position: absolute;
+  top: 100px;
+  left: 100px;
+
+}
+
+.info-div{
+  position: absolute;
+  width: 600px;
+  height: 200px;
+  bottom: 300px;
+  left: 0px;
+  color: white;
+  background: black;
+  opacity: 0.6; 
+}
+
+.info-div-text {
+  position: absolute;
+  color: white;
+  font-family: 'Inter';
+  width: 600px;
+  height: 300px;
+  bottom: 200px;
+  left: 50px;
+}
