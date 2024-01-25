@@ -9,7 +9,7 @@ import {
 import './index.css'
 
 import Home from './home.jsx'
-import Layout from "./Layout.jsx"
+import Layout from "./layout.jsx"
 import About from "./about.jsx"
 
 
