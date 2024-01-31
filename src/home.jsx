@@ -13,6 +13,7 @@ import * as turf from '@turf/turf'
 
 
 
+
 // // Deal with test geojson file
 async function geoJsonTranslateHeight(geoJsonPath,heightAdjust) {
   var info = await fetch(geoJsonPath)
@@ -54,9 +55,6 @@ const emodnet_provider = new WebMapServiceImageryProvider({
 });
 
 
-// define tileset entity marker positions   currently hard wired but clearly need to be derived from tileset data
-const ard_position = Cartesian3.fromDegrees( -5.43545876445209,  56.45732764483844, 0);
-const creran_position = Cartesian3.fromDegrees( -5.341055193857732, 56.51942835664191, 10);
 
 // const terrainProvider = await ArcGISTiledElevationTerrainProvider.fromUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer", {
 //   token: "KED1aF_I4UzXOHy3BnhwyBHU4l5oY6rO6walkmHoYqGp4XyIWUd5YZUC1ZrLAzvV40pR6gBXQayh0eFA8m6vPg.."
@@ -83,6 +81,7 @@ function Home() {
   //       url:" http://localhost:8003/tileset.json"
   //     });
   
+
   useEffect(() => {
     setTimeout(() => {
     if (viewer_ref.current && viewer_ref.current.cesiumElement) {
@@ -137,17 +136,18 @@ function Home() {
         baseLayer.colorToAlpha = new Color(0.0, 0.016, 0.059);
         baseLayer.colorToAlphaThreshold = 0.2;}
 
-      
+   
 
       // finally show viewer when it has been available to ref  
         setViewerReady(true)
+
+        console.log('test')
       }}, 1); }, []);
 
-  const geoJsonReady = geo => {
 
-  }
+  const geoJsonReady = geo => {}
 
-      
+   
  const [tileMarkerAtt, setTileMarkerAtt] = useState([])
 
   const handleReady_tileset = tileset => {

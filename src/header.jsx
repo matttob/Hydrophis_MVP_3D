@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom"
 import './app.css'
 
+
+
 export default function Header() {
     return (
 <header className="nav-bar">
@@ -13,13 +15,14 @@ export default function Header() {
         Hydrophis
     </Link>
     <nav className="nav-bar-text">
-        <Link>LOGIN</Link> 
-        <Link>CONTACT</Link> 
+        <Link  to="/Login"> LOGIN</Link> 
+        <Link to="/Contact">CONTACT</Link>  
         <Link to="/About">ABOUT</Link>  
     </nav>
 </header>
 
 )
 }
+
 
 
