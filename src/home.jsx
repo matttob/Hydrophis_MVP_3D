@@ -184,7 +184,6 @@ function Home() {
                     "markerType" : tiles.markerPath,
                     "id" : tiles.id,
                   "temporalGroupID" : tiles.temporalGroupID}}})
-
          
         tileMarkerPositions.push(pos)
         const key = 'id';
@@ -194,6 +193,29 @@ function Home() {
         setTileMarkerAtt(arrayUniqueByKey)
       
      
+
+      // //// Test centre of rotation settings
+      //   var transform = Transforms.eastNorthUpToFixedFrame(tileset._root._boundingVolume._orientedBoundingBox.center);
+      
+      //   // var cartographicTransform = viewer_ref.current.cesiumElement.scene.globe.ellipsoid.cartesianToCartographic(transform);
+      //   // transform = Matrix4.IDENTITY;
+      //   // transform = computeTransform(cartographicTransform.latitude/ Math.PI * 180, cartographicTransform.longitude/ Math.PI * 180, verticalOffset); 
+      //   transform[14] = transform[14] - 30
+      //   console.log(transform[14])
+      //   // View in east-north-up frame
+      //   const camera = viewer_ref.current.cesiumElement.camera;
+  
+      //   camera.constrainedAxis = Cartesian3.UNIT_Z;
+      //   camera.lookAtTransform(
+      //     transform,
+      //     new Cartesian3(-1200.0, -1200.0, -100)
+      //   );
+      //   // Show reference frame.  Not required.
+      //   const referenceFramePrimitive = viewer_ref.current.cesiumElement.scene.primitives.add(
+      //   new DebugModelMatrixPrimitive({
+      //   modelMatrix: transform,
+      //   length: 100000.0}));
+
       
     // clamp tiles to terrain
     //     //  let c3d_layers
@@ -276,10 +298,10 @@ function Home() {
   const markerElements = tileMarkerAtt.map(markers => {
     return <Entity 
     key={markers.id}
-    position={Cartesian3.fromDegrees(markers.longitude, markers.latitude,0)} 
+    position={Cartesian3.fromDegrees(markers.longitude, markers.latitude,500)} 
     name={markers.name}
     onClick = {handleBillboardClick}>
-    <BillboardGraphics image={markers.markerType} scale={0.02} />
+    <BillboardGraphics image={markers.markerType} scale={0.03} />
   </Entity>
   })
 
