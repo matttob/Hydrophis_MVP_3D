@@ -12,7 +12,6 @@ import Layout from "./layout.jsx"
 import About from "./about.jsx"
 import Login from "./login.jsx"
 import Contact from "./contact.jsx"
-
 import Home from './home.jsx'
 
 

@@ -148,6 +148,53 @@
   border-top-color: white!important;
 }
 
+
+.login-sliding-pane{ 
+  position: absolute!important;
+  height: 30vh!important;
+  bottom:30%;
+  background:black!important;
+  opacity: 0.6;
+}
+
+
+.login-sliding-pane .slide-pane__title {
+  font-size: 18px;
+  font-weight: normal;
+  max-width: 80%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter';
+  color : white!important;
+  background:transparent;
+
+}
+
+.login-sliding-pane .slide-pane__close {
+  margin-left: 24px;
+  padding: 16px;
+  cursor: pointer;
+  color: black;
+  opacity: 0.6;
+}
+
+.login-sliding-pane .slide-pane__header {
+  background:black!important;
+  opacity: 1!important;
+  border-bottom-color: white!important;
+  border-bottom-width: 2px
+}
+
+.login-sliding-pane .slide-pane__content {
+  font-family: 'Inter';
+  color : white!important;
+  opacity: 1!important;
+  border-top-color: white!important;
+}
+
 .bathy-checkBox{
   position: absolute;
   bottom:50px;

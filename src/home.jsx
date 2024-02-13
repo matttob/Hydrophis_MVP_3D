@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef} from 'react'
 
-import {Math,NearFarScalar, Rectangle,ArcGISTiledElevationTerrainProvider,CesiumTerrainProvider,HeadingPitchRoll,Matrix4,Transforms, Cartesian3, Color, viewerCesiumInspectorMixin ,viewerCesium3DTilesInspectorMixin, IonResource, Ion, WebMapServiceImageryProvider, DefaultProxy, WebMapTileServiceImageryProvider, Credit,TextureMinificationFilter, TextureMagnificationFilter} from 'cesium'
+import {Math,NearFarScalar, Rectangle,ArcGISTiledElevationTerrainProvider,CesiumTerrainProvider,HeadingPitchRoll,Matrix4,Transforms, Cartesian3, Color, viewerCesiumInspectorMixin ,viewerCesium3DTilesInspectorMixin, IonResource, Ion, WebMapServiceImageryProvider, DefaultProxy, WebMapTileServiceImageryProvider, Credit,TextureMinificationFilter, TextureMagnificationFilter,DebugModelMatrixPrimitive} from 'cesium'
 import { Viewer,Scene, Entity , GeoJsonDataSource, KmlDataSource,CameraFlyTo, Cesium3DTileset, ScreenSpaceEventHandler,PointGraphics,EntityDescription ,BillboardGraphics,ImageryLayer,useCesium} from 'resium'
 import './app.css'
 import { CustomSwitcher } from 'react-custom-switcher'
@@ -136,12 +136,17 @@ function Home() {
         baseLayer.colorToAlpha = new Color(0.0, 0.016, 0.059);
         baseLayer.colorToAlphaThreshold = 0.2;}
 
-   
-
-      // finally show viewer when it has been available to ref  
+        // Position camera
+        viewer_ref.current.cesiumElement.camera.flyTo({
+          destination: Cartesian3.fromDegrees( -4.041795,  56.683053, 24000000),
+        });
+       // finally show viewer when it has been available to ref  
         setViewerReady(true)
 
-        console.log('test')
+
+
+
+
       }}, 1); }, []);
 
 
@@ -152,9 +157,7 @@ function Home() {
 
   const handleReady_tileset = tileset => {
     
-    
-
-
+  
     // match featureIdlabel from tileset to that of tileset object array in order to be able to apply tileset specfic attirbutes
     var verticalOffset
     const tileSetDetails = tileset_ids.map(tiles => {
@@ -167,8 +170,6 @@ function Home() {
       var cartographicPosition = viewer_ref.current.cesiumElement.scene.globe.ellipsoid.cartesianToCartographic(position);
       tileset._root.transform = Matrix4.IDENTITY;
       tileset._root.transform = computeTransform(cartographicPosition.latitude/ Math.PI * 180, cartographicPosition.longitude/ Math.PI * 180, verticalOffset); // or set tileset._root.transform directly
-      position = Matrix4.getTranslation(tileset._root.transform, new Cartesian3());
-      cartographicPosition = viewer_ref.current.cesiumElement.scene.globe.ellipsoid.cartesianToCartographic(position);
 
 
      // add attributes to marker array
@@ -183,7 +184,7 @@ function Home() {
                     "markerType" : tiles.markerPath,
                     "id" : tiles.id,
                   "temporalGroupID" : tiles.temporalGroupID}}})
-      
+
          
         tileMarkerPositions.push(pos)
         const key = 'id';
