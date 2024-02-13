@@ -21,6 +21,20 @@ export default [
     geoJsonHeightAdjust: -67,
     verticalOffset :30},
 
+    {id:"broad_bay_control_4",
+    temporalGroupID:'',
+    name: "Broad Bay Control 4",
+    url:"https://tiletesting.s3.eu-west-2.amazonaws.com/T_2B/tileset.json",
+    year:2023,
+    description : "Survey Name : Broad Bay Transect Control 4",
+    markerPath : "./trito_circle_marker.png",
+    geojsonPath:"",
+    geoJsonHeightAdjust: '',
+    verticalOffset :30},
+
+
+
+
     {id:"broad_bay_t2b",
     temporalGroupID:'',
     name: "Broad Bay T2B",

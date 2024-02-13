@@ -102,7 +102,7 @@
   text-decoration: underline;
 }
 
-.my-sliding-pane{ 
+.model-sliding-pane{ 
   position: absolute!important;
   height: 200px!important;
   bottom:30%;
@@ -111,7 +111,7 @@
 }
 
 
-.my-sliding-pane .slide-pane__title {
+.model-sliding-pane .slide-pane__title {
   font-size: 18px;
   font-weight: normal;
   max-width: 80%;
@@ -134,19 +134,73 @@
   opacity: 0.6;
 }
 
-.my-sliding-pane .slide-pane__header {
+.model-sliding-pane .slide-pane__header {
   background:black!important;
   opacity: 1!important;
   border-bottom-color: white!important;
   border-bottom-width: 2px
 }
 
-.my-sliding-pane .slide-pane__content {
+.model-sliding-pane .slide-pane__content {
   font-family: 'Inter';
   color : white!important;
   opacity: 1!important;
   border-top-color: white!important;
 }
+
+
+
+
+
+
+
+.marker-sliding-pane{ 
+  position: absolute!important;
+  height: 200px!important;
+  bottom:30%;
+  background:black!important;
+  opacity: 0.6;
+}
+
+
+.marker-sliding-pane .slide-pane__title {
+  font-size: 18px;
+  font-weight: normal;
+  max-width: 80%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter';
+  color : white!important;
+  background:transparent;
+
+}
+
+.slide-pane__close {
+  margin-left: 24px;
+  padding: 16px;
+  cursor: pointer;
+  color: white;
+  opacity: 0.6;
+}
+
+.marker-sliding-pane .slide-pane__header {
+  background:black!important;
+  opacity: 1!important;
+  border-bottom-color: white!important;
+  border-bottom-width: 2px
+}
+
+.marker-sliding-pane .slide-pane__content {
+  font-family: 'Inter';
+  color : white!important;
+  opacity: 1!important;
+  border-top-color: white!important;
+}
+
+
 
 
 .login-sliding-pane{ 

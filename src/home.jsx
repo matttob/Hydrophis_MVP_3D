@@ -100,7 +100,8 @@ function Home() {
         // create core globe sphere and set transparency high at high zoom levels
         const outerCoreRadius = 6320000.0;
         const outerCore = viewer_ref.current.cesiumElement.entities.add({
-          name: "Outer Core",
+          allowPicking: false,
+          name: "test",
           position: Cartesian3.ZERO,
           ellipsoid: {
             radii: new Cartesian3(
@@ -235,30 +236,28 @@ function Home() {
 
 
 
-  const [isHovering, setIsHovering] = useState(false)
-  const handleHover = (mousePosIn) => {  
-    setIsHovering(true)
-
-  }
-
-  function handleNoHover() {
-    setIsHovering(false)
-  }
-
-  // control info slide out pane
-  const [InfoText, setInfoText] = useState("")
-
-  const [isInfo, setIsInfo] = useState({
-    isInfoPaneOpen: false,
-    isInfoPaneOpenLeft: false,
+  // control info slide out pane on model right click
+  const [modelInfoText, setModelInfoText] = useState("")
+  const [isModelInfo, setIsModelInfo] = useState({
+    isModelInfoPaneOpen: false,
+    isModelInfoPaneOpenLeft: false,
   });
 
-
   const handleModelRightClick = (mousePosIn) => {  
-    setInfoText((viewer_ref.current.cesiumElement.scene.pick(mousePosIn.position).content._tileset.featureIdLabel))
-    setIsInfo({ isPaneOpenLeft: true })
+    setModelInfoText((viewer_ref.current.cesiumElement.scene.pick(mousePosIn.position).content._tileset.featureIdLabel))
+    setIsModelInfo({ isModelPaneOpenLeft: true })
 
   };
+
+    // control behaviour on model hover currently unused
+    const [isHovering, setIsHovering] = useState(false)
+    const handleHover = (mousePosIn) => {  
+      setIsHovering(true)
+  
+    }
+    function handleNoHover() {
+      setIsHovering(false)
+    }
 
 //  check box for turning on or off bathymetry image layer 
  const [isChecked, setIsChecked] = useState(false)
@@ -279,15 +278,25 @@ function Home() {
   }
   
 
+  // control info slide out pane on model right click
+  const [markerInfoText, setMarkerInfoText] = useState("")
+  const [isMarkerInfo, setIsMarkerInfo] = useState({
+    isMarkerInfoPaneOpen: false,
+    isMarkerInfoPaneOpenLeft: false,
+  });
+
+
   // date slider state visibility based on 
   const [sliderYear, setSliderYear] = useState([])
   const [dateSliderContainerVis, setDateSliderContainerVis] = useState(false)
 
-
+// handle marker click
   function handleBillboardClick(mousePosIn) { 
     const findMarker = tileMarkerAtt.map(markers => {
     if (viewer_ref.current.cesiumElement.scene.pick(mousePosIn.position).id._name === markers.name)
-      {if (markers.temporalGroupID.length  > 0 )   
+      {setIsMarkerInfo({ isMarkerPaneOpenLeft: true })
+      setMarkerInfoText(markers.name)
+        if (markers.temporalGroupID.length  > 0 )   
         {setDateSliderContainerVis(true)}
       else {{setDateSliderContainerVis(false)} }}
     })
@@ -298,9 +307,9 @@ function Home() {
   const markerElements = tileMarkerAtt.map(markers => {
     return <Entity 
     key={markers.id}
-    position={Cartesian3.fromDegrees(markers.longitude, markers.latitude,500)} 
+    position={Cartesian3.fromDegrees(markers.longitude, markers.latitude,10)} 
     name={markers.name}
-    onClick = {handleBillboardClick}>
+    onRightClick = {handleBillboardClick}>
     <BillboardGraphics image={markers.markerType} scale={0.03} />
   </Entity>
   })
@@ -342,7 +351,7 @@ function Home() {
   <div >
       
     <div className="map-container" style={{visibility: viewerReady ? 'visible' : 'hidden' }}   >
-      <Viewer skyBox = {false} ref={viewer_ref}>
+      <Viewer skyBox = {false} infoBox={false} ref={viewer_ref}>
         <Scene>
           <ImageryLayer
             id = "bathy_imagery_layer"
@@ -375,14 +384,24 @@ function Home() {
         <Checkbox/>
     </div>
 
-    <SlidingPane className =  "my-sliding-pane"
+    <SlidingPane className =  "model-sliding-pane"
       // closeIcon={<div>Some div containing custom close icon.</div>}
-      isOpen={isInfo.isPaneOpenLeft}
+      isOpen={isModelInfo.isModelPaneOpenLeft}
       title="Model Vital Stats"
       from="left"
       width="500px"
-      onRequestClose={() => setIsInfo({isPaneOpenLeft: false })}>
-      <div  >{InfoText}</div>
+      onRequestClose={() => setIsModelInfo({isModelPaneOpenLeft: false })}>
+      <div  >{modelInfoText}</div>
+    </SlidingPane>
+
+    <SlidingPane className =  "marker-sliding-pane"
+      // closeIcon={<div>Some div containing custom close icon.</div>}
+      isOpen={isMarkerInfo.isMarkerPaneOpenLeft}
+      title="Survey Data"
+      from="left"
+      width="500px"
+      onRequestClose={() => setIsMarkerInfo({isMarkerPaneOpenLeft: false })}>
+      <div  >{markerInfoText}</div>
     </SlidingPane>
 
 </div>
