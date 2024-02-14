@@ -10,6 +10,7 @@ export default [
     geoJsonHeightAdjust: '',
     verticalOffset :30}
     ,
+
     {id:"crack_DIVER",
     temporalGroupID:'ardmucknish_bay',
     name: "Ardmucknish Bay",
@@ -21,10 +22,24 @@ export default [
     geoJsonHeightAdjust: -67,
     verticalOffset :30},
 
+    {id:"crack_MBES",
+    temporalGroupID:'ardmucknish_bay',
+    name: "Ardmucknish Bay",
+    url:"https://tiletesting.s3.eu-west-2.amazonaws.com/Crack_MBES_13092023_4326/tileset.json",
+    year:2023,
+    description : "Survey Name : Ardmucknish Bay 2023 Multibeam",
+    markerPath : "./trito_circle_marker.png",
+    geojsonPath:'',
+    geoJsonHeightAdjust:'',
+    verticalOffset :0},
+
+
+   
+
     {id:"broad_bay_control_4",
     temporalGroupID:'',
     name: "Broad Bay Control 4",
-    url:"https://tiletesting.s3.eu-west-2.amazonaws.com/T_2B/tileset.json",
+    url:"https://tiletesting.s3.eu-west-2.amazonaws.com/Control_4/tileset.json",
     year:2023,
     description : "Survey Name : Broad Bay Transect Control 4",
     markerPath : "./trito_circle_marker.png",
@@ -32,6 +47,17 @@ export default [
     geoJsonHeightAdjust: '',
     verticalOffset :30},
 
+    {id:"broad_bay_control_7",
+    temporalGroupID:'',
+    name: "Broad Bay Control 7",
+    url:"https://tiletesting.s3.eu-west-2.amazonaws.com/Control_7/tileset.json",
+    year:2023,
+    description : "Survey Name : Broad Bay Transect Control 7",
+    markerPath : "./trito_circle_marker.png",
+    geojsonPath:"",
+    geoJsonHeightAdjust: '',
+    verticalOffset :30},
+    
 
 
 
@@ -45,6 +71,44 @@ export default [
     geojsonPath:"",
     geoJsonHeightAdjust: '',
     verticalOffset :30},
+
+
+    {id:"broad_bay_t2c",
+    temporalGroupID:'',
+    name: "Broad Bay T2C",
+    url:"https://tiletesting.s3.eu-west-2.amazonaws.com/T_2c/tileset.json",
+    year:2023,
+    description : "Survey Name : Broad Bay Transect 2C",
+    markerPath : "./trito_circle_marker.png",
+    geojsonPath:"",
+    geoJsonHeightAdjust: '',
+    verticalOffset :30},
+
+
+    {id:"broad_bay_t3a",
+    temporalGroupID:'',
+    name: "Broad Bay T3A",
+    url:"https://tiletesting.s3.eu-west-2.amazonaws.com/T_3A/tileset.json",
+    year:2023,
+    description : "Survey Name : Broad Bay Transect 3A",
+    markerPath : "./trito_circle_marker.png",
+    geojsonPath:"",
+    geoJsonHeightAdjust: '',
+    verticalOffset :30},
+
+
+
+    {id:"broad_bay_t3b",
+    temporalGroupID:'',
+    name: "Broad Bay T3B",
+    url:"https://tiletesting.s3.eu-west-2.amazonaws.com/T_3B/tileset.json",
+    year:2023,
+    description : "Survey Name : Broad Bay Transect 3B",
+    markerPath : "./trito_circle_marker.png",
+    geojsonPath:"",
+    geoJsonHeightAdjust: '',
+    verticalOffset :30},
+
 
     {id:"broad_bay_t3c",
     temporalGroupID:'',
@@ -68,6 +132,17 @@ export default [
     geoJsonHeightAdjust: '',
     verticalOffset :30},
 
+    {id:"broad_bay_t4b",
+    temporalGroupID:'',
+    name: "Broad Bay T4B",
+    url:"https://tiletesting.s3.eu-west-2.amazonaws.com/T_4B/tileset.json",
+    year:2023,
+    description : "Survey Name : Broad Bay Transect 4B",
+    markerPath : "./trito_circle_marker.png",
+    geojsonPath:"",
+    geoJsonHeightAdjust: '',
+    verticalOffset :30},
+
 
     {id:"broad_bay_t4c",
     temporalGroupID:'',
@@ -75,6 +150,28 @@ export default [
     url:"https://tiletesting.s3.eu-west-2.amazonaws.com/T_4C/tileset.json",
     year:2023,
     description : "Survey Name : Broad Bay Transect 4C",
+    markerPath : "./trito_circle_marker.png",
+    geojsonPath:"",
+    geoJsonHeightAdjust: '',
+    verticalOffset :30},
+
+    {id:"broad_bay_t5b",
+    temporalGroupID:'',
+    name: "Broad Bay T5B",
+    url:"https://tiletesting.s3.eu-west-2.amazonaws.com/T_5B/tileset.json",
+    year:2023,
+    description : "Survey Name : Broad Bay Transect 5B",
+    markerPath : "./trito_circle_marker.png",
+    geojsonPath:"",
+    geoJsonHeightAdjust: '',
+    verticalOffset :30},
+
+    {id:"broad_bay_t5c",
+    temporalGroupID:'',
+    name: "Broad Bay T5C",
+    url:"https://tiletesting.s3.eu-west-2.amazonaws.com/T_5C/tileset.json",
+    year:2023,
+    description : "Survey Name : Broad Bay Transect 5C",
     markerPath : "./trito_circle_marker.png",
     geojsonPath:"",
     geoJsonHeightAdjust: '',

@@ -201,6 +201,14 @@
 }
 
 
+.marker-name-div{
+  font-family: 'Inter';
+  color : white!important;
+  /* height: 50px!important; */
+  background:none!important;
+  opacity: 1;
+
+}
 
 
 .login-sliding-pane{ 

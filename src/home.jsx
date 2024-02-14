@@ -63,6 +63,25 @@ const emodnet_provider = new WebMapServiceImageryProvider({
 
 function Home() {
 
+  const useMousePosition = () => {
+    const [
+      mousePosition,
+      setMousePosition
+    ] = useState({ x: null, y: null });
+  
+    useEffect(() => {
+      const updateMousePosition = ev => {
+        setMousePosition({ x: ev.clientX, y: ev.clientY });
+      };
+      
+      window.addEventListener('mousemove', updateMousePosition);
+  
+      return () => {
+        window.removeEventListener('mousemove', updateMousePosition);
+      };
+    }, []);
+  
+    return mousePosition;}
   const viewer_ref = useRef(null);
 
   const [viewerReady, setViewerReady] = useState(false)
@@ -126,29 +145,27 @@ function Home() {
         
         
         
-        // Set oceans on Bing base layer to transparent
-        if (transparent_ocean) {
-        const globe = viewer_ref.current.cesiumElement.scene.globe;
-        const baseLayer = viewer_ref.current.cesiumElement.scene.imageryLayers.get(0);
-        globe.showGroundAtmosphere = false;
-        globe.baseColor = Color.TRANSPARENT;
-        globe.translucency.enabled = true;
-        globe.undergroundColor = undefined;
-        baseLayer.colorToAlpha = new Color(0.0, 0.016, 0.059);
-        baseLayer.colorToAlphaThreshold = 0.2;}
+        // // Set oceans on Bing base layer to transparent
+        // if (transparent_ocean) {
+        // const globe = viewer_ref.current.cesiumElement.scene.globe;
+        // const baseLayer = viewer_ref.current.cesiumElement.scene.imageryLayers.get(0);
+        // globe.showGroundAtmosphere = false;
+        // globe.baseColor = Color.TRANSPARENT;
+        // globe.translucency.enabled = true;
+        // globe.undergroundColor = undefined;
+        // baseLayer.colorToAlpha = new Color(0.0, 0.016, 0.059);
+        // baseLayer.colorToAlphaThreshold = 0.2;}
 
         // Position camera
         viewer_ref.current.cesiumElement.camera.flyTo({
           destination: Cartesian3.fromDegrees( -4.041795,  56.683053, 24000000),
         });
+
+     
+
        // finally show viewer when it has been available to ref  
         setViewerReady(true)
-
-
-
-
-
-      }}, 1); }, []);
+    }}, 1); }, []);
 
 
   const geoJsonReady = geo => {}
@@ -157,7 +174,7 @@ function Home() {
  const [tileMarkerAtt, setTileMarkerAtt] = useState([])
 
   const handleReady_tileset = tileset => {
-    
+
   
     // match featureIdlabel from tileset to that of tileset object array in order to be able to apply tileset specfic attirbutes
     var verticalOffset
@@ -171,7 +188,7 @@ function Home() {
       var cartographicPosition = viewer_ref.current.cesiumElement.scene.globe.ellipsoid.cartesianToCartographic(position);
       tileset._root.transform = Matrix4.IDENTITY;
       tileset._root.transform = computeTransform(cartographicPosition.latitude/ Math.PI * 180, cartographicPosition.longitude/ Math.PI * 180, verticalOffset); // or set tileset._root.transform directly
-
+     
 
      // add attributes to marker array
       var pos = {}
@@ -280,22 +297,37 @@ function Home() {
 
   // control info slide out pane on model right click
   const [markerInfoText, setMarkerInfoText] = useState("")
-  const [isMarkerInfo, setIsMarkerInfo] = useState({
-    isMarkerInfoPaneOpen: false,
-    isMarkerInfoPaneOpenLeft: false,
-  });
+  const [isMarkerInfo, setIsMarkerInfo] = useState(false);
 
 
   // date slider state visibility based on 
   const [sliderYear, setSliderYear] = useState([])
   const [dateSliderContainerVis, setDateSliderContainerVis] = useState(false)
 
+
+    // control behaviour on marker hover 
+    const [isMarkerHovering, setIsMarkerHovering] = useState(false)
+
+    function handleMarkerHover(mousePosIn) {  
+      setIsMarkerHovering(true)
+      setIsMarkerInfo(true)
+      setMarkerInfoText((viewer_ref.current.cesiumElement.scene.pick(mousePosIn.endPosition).id._name))
+  
+  
+    }
+    function handleMarkerNoHover() {
+      // setDateSliderContainerVis(true)
+      setIsMarkerHovering(false)
+      setIsMarkerInfo(false)
+    }
+
+
+
 // handle marker click
   function handleBillboardClick(mousePosIn) { 
     const findMarker = tileMarkerAtt.map(markers => {
     if (viewer_ref.current.cesiumElement.scene.pick(mousePosIn.position).id._name === markers.name)
-      {setIsMarkerInfo({ isMarkerPaneOpenLeft: true })
-      setMarkerInfoText(markers.name)
+      {
         if (markers.temporalGroupID.length  > 0 )   
         {setDateSliderContainerVis(true)}
       else {{setDateSliderContainerVis(false)} }}
@@ -309,7 +341,12 @@ function Home() {
     key={markers.id}
     position={Cartesian3.fromDegrees(markers.longitude, markers.latitude,10)} 
     name={markers.name}
-    onRightClick = {handleBillboardClick}>
+    onClick = {handleBillboardClick}
+    onMouseEnter={handleMarkerHover}
+    onMouseLeave={handleMarkerNoHover}
+    >
+ 
+
     <BillboardGraphics image={markers.markerType} scale={0.03} />
   </Entity>
   })
@@ -394,15 +431,19 @@ function Home() {
       <div  >{modelInfoText}</div>
     </SlidingPane>
 
-    <SlidingPane className =  "marker-sliding-pane"
-      // closeIcon={<div>Some div containing custom close icon.</div>}
-      isOpen={isMarkerInfo.isMarkerPaneOpenLeft}
-      title="Survey Data"
-      from="left"
-      width="500px"
-      onRequestClose={() => setIsMarkerInfo({isMarkerPaneOpenLeft: false })}>
-      <div  >{markerInfoText}</div>
-    </SlidingPane>
+
+      <div className =  "marker-name-div" 
+      style={{visibility: isMarkerInfo  ? 'visible' : 'hidden' ,
+      position : 'absolute',
+      left : `${JSON.stringify(useMousePosition().x+20)}px`,
+      top : `${JSON.stringify(useMousePosition().y-20)}px`}}
+     
+      >
+ 
+        {markerInfoText} 
+       
+      </div>
+  
 
 </div>
   );
