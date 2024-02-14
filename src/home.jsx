@@ -188,7 +188,6 @@ function Home() {
       var cartographicPosition = viewer_ref.current.cesiumElement.scene.globe.ellipsoid.cartesianToCartographic(position);
       tileset._root.transform = Matrix4.IDENTITY;
       tileset._root.transform = computeTransform(cartographicPosition.latitude/ Math.PI * 180, cartographicPosition.longitude/ Math.PI * 180, verticalOffset); // or set tileset._root.transform directly
-     
 
      // add attributes to marker array
       var pos = {}
@@ -213,13 +212,15 @@ function Home() {
      
 
       // //// Test centre of rotation settings
-      //   var transform = Transforms.eastNorthUpToFixedFrame(tileset._root._boundingVolume._orientedBoundingBox.center);
-      
+      //   var transform = Transforms.eastNorthUpToFixedFrame(tileset._root._boundingVolume._boundingSphere.center);
+      // console.log(tileset._root._boundingVolume._boundingSphere.radius)
       //   // var cartographicTransform = viewer_ref.current.cesiumElement.scene.globe.ellipsoid.cartesianToCartographic(transform);
       //   // transform = Matrix4.IDENTITY;
       //   // transform = computeTransform(cartographicTransform.latitude/ Math.PI * 180, cartographicTransform.longitude/ Math.PI * 180, verticalOffset); 
-      //   transform[14] = transform[14] - 30
-      //   console.log(transform[14])
+      //   transform[12] = transform[12] + tileset._root._boundingVolume._boundingSphere.radius
+      //   transform[13] = transform[13]  + tileset._root._boundingVolume._boundingSphere.radius
+      //   transform[14] = transform[14] - 20
+        
       //   // View in east-north-up frame
       //   const camera = viewer_ref.current.cesiumElement.camera;
   
@@ -232,8 +233,8 @@ function Home() {
       //   const referenceFramePrimitive = viewer_ref.current.cesiumElement.scene.primitives.add(
       //   new DebugModelMatrixPrimitive({
       //   modelMatrix: transform,
-      //   length: 100000.0}));
-
+        // length: 100000.0}));
+       
       
     // clamp tiles to terrain
     //     //  let c3d_layers
@@ -339,7 +340,7 @@ function Home() {
   const markerElements = tileMarkerAtt.map(markers => {
     return <Entity 
     key={markers.id}
-    position={Cartesian3.fromDegrees(markers.longitude, markers.latitude,10)} 
+    position={Cartesian3.fromDegrees(markers.longitude, markers.latitude,0)} 
     name={markers.name}
     onClick = {handleBillboardClick}
     onMouseEnter={handleMarkerHover}
@@ -437,7 +438,6 @@ function Home() {
       position : 'absolute',
       left : `${JSON.stringify(useMousePosition().x+20)}px`,
       top : `${JSON.stringify(useMousePosition().y-20)}px`}}
-     
       >
  
         {markerInfoText} 
