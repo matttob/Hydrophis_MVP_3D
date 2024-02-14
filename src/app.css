@@ -205,8 +205,10 @@
   font-family: 'Inter';
   color : white!important;
   /* height: 50px!important; */
-  background:none!important;
-  opacity: 1;
+  background:black!important;
+  opacity: 0.6!important;
+  padding: 5px;
+  border-radius: 10px;
 
 }
 
