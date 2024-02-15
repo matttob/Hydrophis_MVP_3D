@@ -444,7 +444,12 @@ function Home() {
     >
  
 
-    <BillboardGraphics image={markers.markerType} scale={0.03} disableDepthTestDistance={Number.POSITIVE_INFINITY}/>
+    <BillboardGraphics 
+    image={markers.markerType} 
+    scale={0.03} 
+    disableDepthTestDistance={Number.POSITIVE_INFINITY}
+    color ={ new Color(1.0, 1.0, 1.0, 1)}
+  />
   </Entity>
   })
 

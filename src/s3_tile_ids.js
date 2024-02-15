@@ -197,9 +197,20 @@ export default [
     markerPath : "./trito_circle_marker.png",
     geojsonPath:"",
     geoJsonHeightAdjust: '',
+    verticalOffset :30},
+
+    {id:"craignish_sw_plot_c",
+    temporalGroupID:'',
+    name: "Craignish South West Bay Plot C",
+    url:"https://tiletesting.s3.eu-west-2.amazonaws.com/SW_Bay_C/tileset.json",
+    year:2023,
+    description : "Survey Name : Craignish South West Bay Plot C",
+    markerPath : "./trito_circle_marker.png",
+    geojsonPath:"",
+    geoJsonHeightAdjust: '',
     verticalOffset :30}
  
-
+    
 
 ]
 
