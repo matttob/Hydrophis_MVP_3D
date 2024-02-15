@@ -118,7 +118,7 @@ function Home() {
         // viewer_ref.current.cesiumElement.scene.terrainProvider = customTerrainProvider
  
         // create core globe sphere and set transparency high at high zoom levels
-        const outerCoreRadius = 6320000.0;
+        const outerCoreRadius = 6200000.0;
         const outerCore = viewer_ref.current.cesiumElement.entities.add({
           allowPicking: false,
           name: "test",
@@ -146,23 +146,13 @@ function Home() {
         
         
         
-        // // Set oceans on Bing base layer to transparent
-        // if (transparent_ocean) {
-        // const globe = viewer_ref.current.cesiumElement.scene.globe;
-        // const baseLayer = viewer_ref.current.cesiumElement.scene.imageryLayers.get(0);
-        // globe.showGroundAtmosphere = false;
-        // globe.baseColor = Color.TRANSPARENT;
-        // globe.translucency.enabled = true;
-        // globe.undergroundColor = undefined;
-        // baseLayer.colorToAlpha = new Color(0.0, 0.016, 0.059);
-        // baseLayer.colorToAlphaThreshold = 0.2;}
 
         // Position camera
         viewer_ref.current.cesiumElement.camera.flyTo({
           destination: Cartesian3.fromDegrees( -4.041795,  56.683053, 24000000),
         });
 
-     
+
 
        // finally show viewer when it has been available to ref  
         setViewerReady(true)
@@ -454,7 +444,7 @@ function Home() {
     >
  
 
-    <BillboardGraphics image={markers.markerType} scale={0.03} />
+    <BillboardGraphics image={markers.markerType} scale={0.03} disableDepthTestDistance={Number.POSITIVE_INFINITY}/>
   </Entity>
   })
 
