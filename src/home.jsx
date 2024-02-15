@@ -175,22 +175,25 @@ function Home() {
 
     }}, 1); }, []);
 
-    const [DistanceScaleText, setDistanceScaleText] = useState("")
 
+    // Scale bar
+    const [distanceScaleText, setDistanceScaleText] = useState("")
+    const [scaleBarVisible, setScaleBarVisible] = useState(false)
 
     function updateDistanceScale()
-    {console.log(viewer_ref.current.cesiumElement.scene.  canvas.clientWidth)
+    {
     
       var geodesic = new EllipsoidGeodesic();
       var distances = [
+          0.0001,
+          0.001,
+          0.01,
+          0.1,
           1, 2, 3, 5,
           10, 20, 30, 50,
           100, 200, 300, 500,
           1000, 2000, 3000, 5000,
-          10000, 20000, 30000, 50000,
-          100000, 200000, 300000, 500000,
-          1000000, 2000000, 3000000, 5000000,
-          10000000, 20000000, 30000000, 50000000];
+          10000, 20000, 30000, 50000];
         var scene = viewer_ref.current.cesiumElement.scene
        // Find the distance between two pixels at the bottom center of the screen.
        var width = scene.canvas.clientWidth;
@@ -206,6 +209,7 @@ function Home() {
 
       if (typeof leftPosition == "undefined" || typeof rightPosition == "undefined") {
         setDistanceScaleText("")
+        setScaleBarVisible(false)
         return;
    }
 
@@ -215,7 +219,7 @@ function Home() {
    geodesic.setEndPoints(leftCartographic, rightCartographic);
    var pixelDistance = geodesic.surfaceDistance  //meters to feet
    var pixelDistanceKm = pixelDistance / 1000;
-
+   console.log(pixelDistance)
    // Find the first distance that makes the scale bar less than 100 pixels.
    var maxBarWidth = 100;
    var distance;
@@ -245,10 +249,11 @@ function Home() {
            }  
        }
    }
-
+   console.log(distance)
    if (typeof distance !== "undefined") {
 
        label = distance.toString() + units;
+       setScaleBarVisible(true)
 
        if(units === " km")
        {
@@ -261,8 +266,8 @@ function Home() {
    
        setDistanceScaleText(label)
    } else {
-       document.getElementById("scalebar").style.width = "100px";
-       setDistanceScaleText("");
+      setScaleBarVisible(false)
+      
     }
     
     
@@ -485,6 +490,8 @@ function Home() {
   })
 
 
+  console.log(scaleBarVisible)
+
 
   return (
   <div >
@@ -542,10 +549,10 @@ function Home() {
       >
         {markerInfoText} 
       </div>
-
-      <div id="scale-box" className = "scale-box">
+      
+      <div id="scale-box" className = "scale-box" style={{visibility: scaleBarVisible  ? 'visible' : 'hidden' }}>
         <div id="scalebar" className="scalebar" > </div>
-        <p id="scalebartag" className = "scalebartag">{DistanceScaleText}</p>
+        <p id="scalebartag" className = "scalebartag">{distanceScaleText}</p>
       </div>
   
 
