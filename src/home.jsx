@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef} from 'react'
 
-import {Math,NearFarScalar, Rectangle,ArcGISTiledElevationTerrainProvider,CesiumTerrainProvider,HeadingPitchRoll,Matrix4,Transforms, Cartesian3, Color, viewerCesiumInspectorMixin ,viewerCesium3DTilesInspectorMixin, IonResource, Ion, WebMapServiceImageryProvider, DefaultProxy, WebMapTileServiceImageryProvider, Credit,TextureMinificationFilter, TextureMagnificationFilter,DebugModelMatrixPrimitive} from 'cesium'
+import {Math,NearFarScalar, Rectangle,ArcGISTiledElevationTerrainProvider,CesiumTerrainProvider,HeadingPitchRoll,Matrix4,Transforms, Cartesian3, Color, viewerCesiumInspectorMixin ,viewerCesium3DTilesInspectorMixin, IonResource, Ion, WebMapServiceImageryProvider, DefaultProxy, WebMapTileServiceImageryProvider, Credit,TextureMinificationFilter, TextureMagnificationFilter,DebugModelMatrixPrimitive,EllipsoidGeodesic,Cartesian2} from 'cesium'
 import { Viewer,Scene, Entity , GeoJsonDataSource, KmlDataSource,CameraFlyTo, Cesium3DTileset, ScreenSpaceEventHandler,PointGraphics,EntityDescription ,BillboardGraphics,ImageryLayer,useCesium} from 'resium'
 import './app.css'
 import { CustomSwitcher } from 'react-custom-switcher'
@@ -25,7 +25,6 @@ async function geoJsonTranslateHeight(geoJsonPath,heightAdjust) {
   return turf.transformTranslate(info, 0, 0, { zTranslation: heightAdjust});
 }
 
-var transparent_ocean = false
 
 
 var tileMarkerPositions =[]
@@ -108,6 +107,8 @@ function Home() {
         viewer_ref.current.cesiumElement.animation.container.style.visibility = "hidden"
         viewer_ref.current.cesiumElement.timeline.container.style.visibility = "hidden"
         viewer_ref.current.cesiumElement._toolbar.style.visibility = "hidden"
+        
+       
 
 
         viewer_ref.current.cesiumElement.scene.backgroundColor = Color.BLACK.clone();
@@ -165,7 +166,107 @@ function Home() {
 
        // finally show viewer when it has been available to ref  
         setViewerReady(true)
+        
+        // Event listener for scale bar
+        viewer_ref.current.cesiumElement.camera.moveEnd.addEventListener(function() { 
+          // the camera stopped moving
+          updateDistanceScale();
+       });
+
     }}, 1); }, []);
+
+    const [DistanceScaleText, setDistanceScaleText] = useState("")
+
+
+    function updateDistanceScale()
+    {console.log(viewer_ref.current.cesiumElement.scene.  canvas.clientWidth)
+    
+      var geodesic = new EllipsoidGeodesic();
+      var distances = [
+          1, 2, 3, 5,
+          10, 20, 30, 50,
+          100, 200, 300, 500,
+          1000, 2000, 3000, 5000,
+          10000, 20000, 30000, 50000,
+          100000, 200000, 300000, 500000,
+          1000000, 2000000, 3000000, 5000000,
+          10000000, 20000000, 30000000, 50000000];
+        var scene = viewer_ref.current.cesiumElement.scene
+       // Find the distance between two pixels at the bottom center of the screen.
+       var width = scene.canvas.clientWidth;
+       var height = scene.canvas.clientHeight;
+  
+       var left = scene.camera.getPickRay(new Cartesian2((width / 2) | 0, height - 1));
+       var right = scene.camera.getPickRay(new Cartesian2(1 + (width / 2) | 0, height - 1));
+   
+       var globe = scene.globe;
+       var leftPosition = globe.pick(left, scene);
+       var rightPosition = globe.pick(right, scene);
+
+
+      if (typeof leftPosition == "undefined" || typeof rightPosition == "undefined") {
+        setDistanceScaleText("")
+        return;
+   }
+
+   var leftCartographic = globe.ellipsoid.cartesianToCartographic(leftPosition);
+   var rightCartographic = globe.ellipsoid.cartesianToCartographic(rightPosition);
+
+   geodesic.setEndPoints(leftCartographic, rightCartographic);
+   var pixelDistance = geodesic.surfaceDistance  //meters to feet
+   var pixelDistanceKm = pixelDistance / 1000;
+
+   // Find the first distance that makes the scale bar less than 100 pixels.
+   var maxBarWidth = 100;
+   var distance;
+   var label;
+   var units;
+
+   for (var i = distances.length - 1; i >= 0; --i) {
+        if (distances[i] / pixelDistance < maxBarWidth) {
+           if(distances[i] > 1000)
+           {
+               for (var j = distances.length - 1; j >= 0; --j)
+               {
+                   if (distances[j] / pixelDistanceKm < maxBarWidth)
+                   {
+                       distance = distances[j];
+                       units = " km";
+                       break;
+                   }
+                }
+               break;
+           }
+           else
+           {
+               distance = distances[i];
+               units = " m";
+               break;
+           }  
+       }
+   }
+
+   if (typeof distance !== "undefined") {
+
+       label = distance.toString() + units;
+
+       if(units === " km")
+       {
+           document.getElementById("scalebar").style.width = ((distance / pixelDistanceKm) | 0).toString() + "px";
+       }
+       else
+       {
+           document.getElementById("scalebar").style.width = ((distance / pixelDistance) | 0).toString() + "px";
+       }
+   
+       setDistanceScaleText(label)
+   } else {
+       document.getElementById("scalebar").style.width = "100px";
+       setDistanceScaleText("");
+    }
+    
+    
+    }
 
 
   const geoJsonReady = geo => {}
@@ -439,9 +540,12 @@ function Home() {
       left : `${JSON.stringify(useMousePosition().x+20)}px`,
       top : `${JSON.stringify(useMousePosition().y-20)}px`}}
       >
- 
         {markerInfoText} 
-       
+      </div>
+
+      <div id="scale-box" className = "scale-box">
+        <div id="scalebar" className="scalebar" > </div>
+        <p id="scalebartag" className = "scalebartag">{DistanceScaleText}</p>
       </div>
   
 

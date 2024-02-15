@@ -294,3 +294,49 @@
   bottom: 200px;
   left: 50px;
 }
+
+.scale-box
+     {
+        padding: 1px 1px;
+        bottom: 25px;
+        right: 15px;
+        position: absolute;
+        display: inline-block;
+        background:none;
+        opacity: 1; 
+        color:white;
+        border-radius: 2px;
+        font-family: 'Inter';
+        font-size: 14px;
+        font-style: normal;
+        text-align: center;
+        white-space:pre-wrap;
+     }
+     
+     .scale-box .scale-text
+     {
+        display: inline-block;
+        position: relative;
+        background: #304458;
+        color: #bacdcc;
+        border-radius: 2px;
+        padding: 0px 0px;
+        margin: 0px 0px;
+        font-family: 'Inter';
+        font-size: 14px;
+        font-style: normal;
+        text-align: center;
+        white-space:pre-wrap;
+     }
+     
+     .scale-box .scalebar
+     {
+      background: white;
+        height:6px;
+        width:100px;
+        padding-left: 5%;
+        margin-top: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 2px;
+     }

@@ -2,7 +2,7 @@ export default [
     {id:"crack_ROV",
     temporalGroupID:'ardmucknish_bay',
     name: "Ardmucknish Bay",
-    url:"https://tiletesting.s3.eu-west-2.amazonaws.com/3dtiles_50/tileset.json",
+    url:"https://tiletesting.s3.eu-west-2.amazonaws.com/ROV_20x10_Crack_for_Hydrophis/tileset.json",
     year:2023,
     description : "Survey Name : Ardmucknish Bay 2023",
     markerPath : "./trito_circle_marker.png",
@@ -25,13 +25,13 @@ export default [
     // {id:"crack_MBES",
     // temporalGroupID:'ardmucknish_bay',
     // name: "Ardmucknish Bay",
-    // url:"https://tiletesting.s3.eu-west-2.amazonaws.com/Crack_MBES_13092023_4326/tileset.json",
+    // url:"https://tiletesting.s3.eu-west-2.amazonaws.com/Crack_MBES_13092023_Attempt_2/tileset.json",
     // year:2023,
     // description : "Survey Name : Ardmucknish Bay 2023 Multibeam",
     // markerPath : "./trito_circle_marker.png",
     // geojsonPath:'',
     // geoJsonHeightAdjust:'',
-    // verticalOffset :0},
+    // verticalOffset :-100},
 
 
    
@@ -175,8 +175,30 @@ export default [
     markerPath : "./trito_circle_marker.png",
     geojsonPath:"",
     geoJsonHeightAdjust: '',
-    verticalOffset :30}
+    verticalOffset :30},
 
+    {id:"craignish_sw_plot_a",
+    temporalGroupID:'',
+    name: "Craignish South West Bay Plot A",
+    url:"https://tiletesting.s3.eu-west-2.amazonaws.com/SW_Bay_Plot_A/tileset.json",
+    year:2023,
+    description : "Survey Name : Craignish South West Bay Plot A",
+    markerPath : "./trito_circle_marker.png",
+    geojsonPath:"",
+    geoJsonHeightAdjust: '',
+    verticalOffset :30},
+
+    {id:"craignish_sw_plot_b",
+    temporalGroupID:'',
+    name: "Craignish South West Bay Plot B",
+    url:"https://tiletesting.s3.eu-west-2.amazonaws.com/SW_Bay_B/tileset.json",
+    year:2023,
+    description : "Survey Name : Craignish South West Bay Plot B",
+    markerPath : "./trito_circle_marker.png",
+    geojsonPath:"",
+    geoJsonHeightAdjust: '',
+    verticalOffset :30}
+ 
 
 
 ]
