@@ -8,7 +8,7 @@ export default [
     markerPath : "./trito_circle_marker.png",
     geojsonPath:"",
     geoJsonHeightAdjust: '',
-    verticalOffset :30}
+    verticalOffset :27}
     ,
 
     {id:"crack_DIVER",

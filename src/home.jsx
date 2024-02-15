@@ -436,7 +436,7 @@ function Home() {
   const markerElements = tileMarkerAtt.map(markers => {
     return <Entity 
     key={markers.id}
-    position={Cartesian3.fromDegrees(markers.longitude, markers.latitude,0)} 
+    position={Cartesian3.fromDegrees(markers.longitude, markers.latitude,-30)} 
     name={markers.name}
     onClick = {handleBillboardClick}
     onMouseEnter={handleMarkerHover}
