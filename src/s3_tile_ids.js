@@ -2,7 +2,7 @@ export default [
     {id:"crack_ROV",
     temporalGroupID:'ardmucknish_bay',
     name: "Ardmucknish Bay",
-    url:"https://tiletesting.s3.eu-west-2.amazonaws.com/ROV_20x10_Crack_for_Hydrophis/tileset.json",
+    url:"https://tiletesting.s3.eu-west-2.amazonaws.com/ROV_20x10_Crack_for_Hydrophis_2/tileset.json",
     year:2023,
     description : "Survey Name : Ardmucknish Bay 2023",
     markerPath : "./trito_circle_marker.png",
