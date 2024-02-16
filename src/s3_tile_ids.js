@@ -210,7 +210,17 @@ export default [
     geoJsonHeightAdjust: '',
     verticalOffset :30}
  
-    
+    {id:"craignish_sw_plot_D",
+    temporalGroupID:'',
+    name: "Craignish South West Bay Plot D",
+    url:"https://tiletesting.s3.eu-west-2.amazonaws.com/SW_Bay_D/tileset.json",
+    year:2023,
+    description : "Survey Name : Craignish South West Bay Plot D",
+    markerPath : "./trito_circle_marker.png",
+    geojsonPath:"",
+    geoJsonHeightAdjust: '',
+    verticalOffset :30}
+ 
 
 ]
 
