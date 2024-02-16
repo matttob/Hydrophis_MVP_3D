@@ -208,7 +208,7 @@ export default [
     markerPath : "./trito_circle_marker.png",
     geojsonPath:"",
     geoJsonHeightAdjust: '',
-    verticalOffset :30}
+    verticalOffset :30},
  
     {id:"craignish_sw_plot_D",
     temporalGroupID:'',
