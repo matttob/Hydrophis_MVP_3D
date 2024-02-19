@@ -135,7 +135,7 @@ function Home() {
       
         const globe = viewer_ref.current.cesiumElement.scene.globe;
         globe._translucency._frontFaceAlphaByDistance = new NearFarScalar(
-          10.0,
+          100.0,
           0.0,
           800.0,
           1.0

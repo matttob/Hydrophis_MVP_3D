@@ -130,7 +130,7 @@ export default [
     markerPath : "./trito_circle_marker.png",
     geojsonPath:"",
     geoJsonHeightAdjust: '',
-    verticalOffset :30},
+    verticalOffset :5},
 
     {id:"broad_bay_t4b",
     temporalGroupID:'',
@@ -141,7 +141,7 @@ export default [
     markerPath : "./trito_circle_marker.png",
     geojsonPath:"",
     geoJsonHeightAdjust: '',
-    verticalOffset :30},
+    verticalOffset :5},
 
 
     {id:"broad_bay_t4c",
@@ -153,7 +153,7 @@ export default [
     markerPath : "./trito_circle_marker.png",
     geojsonPath:"",
     geoJsonHeightAdjust: '',
-    verticalOffset :30},
+    verticalOffset :5},
 
     {id:"broad_bay_t5b",
     temporalGroupID:'',
@@ -164,7 +164,7 @@ export default [
     markerPath : "./trito_circle_marker.png",
     geojsonPath:"",
     geoJsonHeightAdjust: '',
-    verticalOffset :30},
+    verticalOffset :5},
 
     {id:"broad_bay_t5c",
     temporalGroupID:'',
@@ -175,7 +175,7 @@ export default [
     markerPath : "./trito_circle_marker.png",
     geojsonPath:"",
     geoJsonHeightAdjust: '',
-    verticalOffset :30},
+    verticalOffset :5},
 
     {id:"craignish_sw_plot_a",
     temporalGroupID:'',
@@ -186,7 +186,7 @@ export default [
     markerPath : "./trito_circle_marker.png",
     geojsonPath:"",
     geoJsonHeightAdjust: '',
-    verticalOffset :30},
+    verticalOffset :5},
 
     {id:"craignish_sw_plot_b",
     temporalGroupID:'',
@@ -197,7 +197,7 @@ export default [
     markerPath : "./trito_circle_marker.png",
     geojsonPath:"",
     geoJsonHeightAdjust: '',
-    verticalOffset :30},
+    verticalOffset :5},
 
     {id:"craignish_sw_plot_c",
     temporalGroupID:'',
@@ -208,9 +208,9 @@ export default [
     markerPath : "./trito_circle_marker.png",
     geojsonPath:"",
     geoJsonHeightAdjust: '',
-    verticalOffset :30},
+    verticalOffset :5},
  
-    {id:"craignish_sw_plot_D",
+    {id:"craignish_sw_plot_d",
     temporalGroupID:'',
     name: "Craignish South West Bay Plot D",
     url:"https://tiletesting.s3.eu-west-2.amazonaws.com/SW_Bay_D/tileset.json",
@@ -219,7 +219,42 @@ export default [
     markerPath : "./trito_circle_marker.png",
     geojsonPath:"",
     geoJsonHeightAdjust: '',
-    verticalOffset :30}
+    verticalOffset :5},
+
+    {id:"craignish_sw_plot_e",
+    temporalGroupID:'',
+    name: "Craignish South West Bay Plot E",
+    url:"https://tiletesting.s3.eu-west-2.amazonaws.com/SW_Bay_E/tileset.json",
+    year:2023,
+    description : "Survey Name : Craignish South West Bay Plot E",
+    markerPath : "./trito_circle_marker.png",
+    geojsonPath:"",
+    geoJsonHeightAdjust: '',
+    verticalOffset :5},
+
+    {id:"craignish_sw_plot_f",
+    temporalGroupID:'',
+    name: "Craignish South West Bay Plot F",
+    url:"https://tiletesting.s3.eu-west-2.amazonaws.com/SW_Bay_F/tileset.json",
+    year:2023,
+    description : "Survey Name : Craignish South West Bay Plot F",
+    markerPath : "./trito_circle_marker.png",
+    geojsonPath:"",
+    geoJsonHeightAdjust: '',
+    verticalOffset :5},
+
+    {id:"craignish_sw_plot_g",
+    temporalGroupID:'',
+    name: "Craignish South West Bay Plot G",
+    url:"https://tiletesting.s3.eu-west-2.amazonaws.com/SW_Bay_G/tileset.json",
+    year:2023,
+    description : "Survey Name : Craignish South West Bay Plot G",
+    markerPath : "./trito_circle_marker.png",
+    geojsonPath:"",
+    geoJsonHeightAdjust: '',
+    verticalOffset :5}
+ 
+ 
  
 
 ]
