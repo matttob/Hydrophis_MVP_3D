@@ -299,7 +299,7 @@
      {
         padding: 1px 1px;
         bottom: 25px;
-        right: 15px;
+        right: 65px;
         position: absolute;
         display: inline-block;
         background:none;
@@ -340,3 +340,32 @@
         margin-right: auto;
         border-radius: 2px;
      }
+
+
+     .lonlat-box
+     {
+        padding: 1px 1px;
+        bottom: 95px;
+        right: 20px;
+        position: absolute;
+        display: inline-block;
+        background:none;
+        opacity:1; 
+     }
+     
+     .lonlat-box .lonlat-box-text
+     {
+        display: inline-block;
+        position: relative;
+        background: none;
+        color: white;
+        border-radius: 2px;
+        padding: 0px 0px;
+        margin: 0px 0px;
+        font-family: 'Inter';
+        font-size: 14px;
+        font-style: normal;
+        text-align: center;
+        white-space:pre-wrap;
+     }
+     

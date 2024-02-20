@@ -2,8 +2,8 @@
 
 import { useState, useEffect, useRef} from 'react'
 
-import {Math,NearFarScalar, Rectangle,ArcGISTiledElevationTerrainProvider,CesiumTerrainProvider,HeadingPitchRoll,Matrix4,Transforms, Cartesian3, Color, viewerCesiumInspectorMixin ,viewerCesium3DTilesInspectorMixin, IonResource, Ion, WebMapServiceImageryProvider, DefaultProxy, WebMapTileServiceImageryProvider, Credit,TextureMinificationFilter, TextureMagnificationFilter,DebugModelMatrixPrimitive,EllipsoidGeodesic,Cartesian2} from 'cesium'
-import { Viewer,Scene, Entity , GeoJsonDataSource, KmlDataSource,CameraFlyTo, Cesium3DTileset, ScreenSpaceEventHandler,PointGraphics,EntityDescription ,BillboardGraphics,ImageryLayer,useCesium} from 'resium'
+import {Cesium3DTileStyle,defaultValue,ScreenSpaceEventType,ScreenSpaceEventHandler,Ellipsoid,EasingFunction, Math as CesiumMath,NearFarScalar, Rectangle,ArcGISTiledElevationTerrainProvider,CesiumTerrainProvider,HeadingPitchRoll,Matrix4,Transforms, Cartesian3, Color, viewerCesiumInspectorMixin ,viewerCesium3DTilesInspectorMixin, IonResource, Ion, WebMapServiceImageryProvider, DefaultProxy, WebMapTileServiceImageryProvider, Credit,TextureMinificationFilter, TextureMagnificationFilter,DebugModelMatrixPrimitive,EllipsoidGeodesic,Cartesian2} from 'cesium'
+import { Viewer,Scene, Entity , GeoJsonDataSource, KmlDataSource,CameraFlyTo, Cesium3DTileset,PointGraphics,EntityDescription ,BillboardGraphics,ImageryLayer,useCesium} from 'resium'
 import './app.css'
 import { CustomSwitcher } from 'react-custom-switcher'
 import SlidingPane from "react-sliding-pane";
@@ -42,7 +42,7 @@ const CustomSwitcheroptionsPrimary = [
     color: "#32a871"
   }];
 
-//Cesium ion api access token
+//Cesium ion api access tok
 // Ion.defaultAccessToken ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzYjM5M2JiYy03ODhiLTQ2YmUtODhkNC0yNTdlZTQ2Y2RkOGMiLCJpZCI6MTU4OTgxLCJpYXQiOjE2OTY0MzgyNjJ9.4DRtmcWO-nxpnuMP8hNoq8AYgyy3ZQYYfxuZQ_p0W1w";
 
 // Bathymetry image provider details
@@ -81,6 +81,8 @@ function Home() {
     }, []);
   
     return mousePosition;}
+
+
   const viewer_ref = useRef(null);
 
   const [viewerReady, setViewerReady] = useState(false)
@@ -148,31 +150,85 @@ function Home() {
         
 
         // Position camera
+
+     
+
         viewer_ref.current.cesiumElement.camera.flyTo({
           destination: Cartesian3.fromDegrees( -4.041795,  56.683053, 24000000),
         });
 
+        setTimeout(() => {viewer_ref.current.cesiumElement.camera.flyTo({
+          destination: Cartesian3.fromDegrees( -5.4357606670,  56.4569090743, 100),
+        })},1)
 
+        
 
+              // viewer_ref.current.cesiumElement.camera.flyTo({
+              //   destination : new Cartesian3(-2304817.2435183465, -3639113.128132953, 4688495.013644141),
+
+              //   easingFunction: EasingFunction.QUADRATIC_IN_OUT,
+              //   duration: 10
+              // });
+      
+  
+        
+        
        // finally show viewer when it has been available to ref  
         setViewerReady(true)
         
         // Event listener for scale bar
         viewer_ref.current.cesiumElement.camera.moveEnd.addEventListener(function() { 
           // the camera stopped moving
-          updateDistanceScale();
-       });
-
+          updateDistanceScale()});
+   // Event listener for mouse hover lon lat
+          viewer_ref.current.cesiumElement.scene.canvas.addEventListener('mousemove', function(e) {
+            updateHoverLonLat(e)})
+            
+  
     }}, 1); }, []);
 
 
+
+
+   
     // Scale bar
     const [distanceScaleText, setDistanceScaleText] = useState("")
     const [scaleBarVisible, setScaleBarVisible] = useState(false)
+    
+    
+    // create lonlat position text
+    const [latText, setLatText] = useState("")
+    const [lonText, setLonText] = useState("")
+    const [latNorthSouth, setLatNorthSouth] = useState("")
+    const [lonEastWest, setLonEastWest] = useState("")
+
+
+  function updateHoverLonLat(e){
+
+    var ellipsoid =  viewer_ref.current.cesiumElement.scene.globe.ellipsoid;
+    // Mouse over the globe to see the cartographic position 
+    var cartesian = viewer_ref.current.cesiumElement.camera.pickEllipsoid(new Cartesian3(e.clientX, e.clientY), ellipsoid);
+    if (cartesian) {
+        var cartographic = ellipsoid.cartesianToCartographic(cartesian);
+        var longitudeString = CesiumMath.toDegrees(cartographic.longitude).toFixed(5);
+        var latitudeString = CesiumMath.toDegrees(cartographic.latitude).toFixed(5);
+        setLonText(longitudeString)
+        longitudeString > 0 ? setLonEastWest('W') : setLonEastWest('E');
+       
+
+        setLatText(latitudeString)   
+        latitudeString > 0 ? setLatNorthSouth('N') : setLatNorthSouth('S');
+        
+    }};
+
+  
 
     function updateDistanceScale()
     {
     
+
+
+
       var geodesic = new EllipsoidGeodesic();
       var distances = [
           0.0001,
@@ -209,7 +265,7 @@ function Home() {
    geodesic.setEndPoints(leftCartographic, rightCartographic);
    var pixelDistance = geodesic.surfaceDistance  //meters to feet
    var pixelDistanceKm = pixelDistance / 1000;
-   console.log(pixelDistance)
+
    // Find the first distance that makes the scale bar less than 100 pixels.
    var maxBarWidth = 100;
    var distance;
@@ -239,7 +295,7 @@ function Home() {
            }  
        }
    }
-   console.log(distance)
+   
    if (typeof distance !== "undefined") {
 
        label = distance.toString() + units;
@@ -255,6 +311,8 @@ function Home() {
        }
    
        setDistanceScaleText(label)
+
+
    } else {
       setScaleBarVisible(false)
       
@@ -283,7 +341,7 @@ function Home() {
       var position = Matrix4.getTranslation(tileset._root.transform, new Cartesian3());
       var cartographicPosition = viewer_ref.current.cesiumElement.scene.globe.ellipsoid.cartesianToCartographic(position);
       tileset._root.transform = Matrix4.IDENTITY;
-      tileset._root.transform = computeTransform(cartographicPosition.latitude/ Math.PI * 180, cartographicPosition.longitude/ Math.PI * 180, verticalOffset); // or set tileset._root.transform directly
+      tileset._root.transform = computeTransform(cartographicPosition.latitude/ CesiumMath.PI * 180, cartographicPosition.longitude/ CesiumMath.PI * 180, verticalOffset); // or set tileset._root.transform directly
 
      // add attributes to marker array
       var pos = {}
@@ -292,8 +350,8 @@ function Home() {
         if (Object.values(tiles).includes(tileset.featureIdLabel)  ) {
         pos = {"name":tiles.name,
                     "cartoPosition" : position,
-                    "longitude" : (cartographicPosition.longitude/ Math.PI * 180),
-                    "latitude" : (cartographicPosition.latitude/ Math.PI * 180),
+                    "longitude" : (cartographicPosition.longitude/ CesiumMath.PI * 180),
+                    "latitude" : (cartographicPosition.latitude/ CesiumMath.PI * 180),
                     "markerType" : tiles.markerPath,
                     "id" : tiles.id,
                   "temporalGroupID" : tiles.temporalGroupID}}})
@@ -309,10 +367,25 @@ function Home() {
 
       // //// Test centre of rotation settings
       //   var transform = Transforms.eastNorthUpToFixedFrame(tileset._root._boundingVolume._boundingSphere.center);
-      // console.log(tileset._root._boundingVolume._boundingSphere.radius)
-      //   // var cartographicTransform = viewer_ref.current.cesiumElement.scene.globe.ellipsoid.cartesianToCartographic(transform);
+      if (tileset.featureIdLabel.includes('Survey Name : Ardmucknish Bay 2023 Multibeam')) {
+        const style = [];
+      
+        style.pointSize = defaultValue(style.pointSize, 10);
+       
+
+        tileset._root.tileset.style = new Cesium3DTileStyle(style);
+
+
+        tileset._root._styleApplied = true
+        console.log(tileset._root._styleApplied)
+        console.log(tileset._root )
+   
+    }
+      
+     
+     //   // var cartographicTransform = viewer_ref.current.cesiumElement.scene.globe.ellipsoid.cartesianToCartographic(transform);
       //   // transform = Matrix4.IDENTITY;
-      //   // transform = computeTransform(cartographicTransform.latitude/ Math.PI * 180, cartographicTransform.longitude/ Math.PI * 180, verticalOffset); 
+      //   // transform = computeTransform(cartographicTransform.latitude/ CesiumMath.PI * 180, cartographicTransform.longitude/ CesiumMath.PI * 180, verticalOffset); 
       //   transform[12] = transform[12] + tileset._root._boundingVolume._boundingSphere.radius
       //   transform[13] = transform[13]  + tileset._root._boundingVolume._boundingSphere.radius
       //   transform[14] = transform[14] - 20
@@ -350,6 +423,7 @@ function Home() {
 
 
 
+
   // control info slide out pane on model right click
   const [modelInfoText, setModelInfoText] = useState("")
   const [isModelInfo, setIsModelInfo] = useState({
@@ -362,6 +436,8 @@ function Home() {
     setIsModelInfo({ isModelPaneOpenLeft: true })
 
   };
+
+
 
     // control behaviour on model hover currently unused
     const [isHovering, setIsHovering] = useState(false)
@@ -398,12 +474,12 @@ function Home() {
 
 
   // date slider state visibility based on 
-  const [sliderYear, setSliderYear] = useState([])
+  const [sliderYear, setSliderYear] = useState([2023])
   const [dateSliderContainerVis, setDateSliderContainerVis] = useState(false)
 
 
-    // control behaviour on marker hover 
-    const [isMarkerHovering, setIsMarkerHovering] = useState(false)
+  // control behaviour on marker hover 
+  const [isMarkerHovering, setIsMarkerHovering] = useState(false)
 
     function handleMarkerHover(mousePosIn) {  
       setIsMarkerHovering(true)
@@ -485,9 +561,6 @@ function Home() {
   })
 
 
-  console.log(scaleBarVisible)
-
-
   return (
   <div >
       
@@ -549,7 +622,14 @@ function Home() {
         <div id="scalebar" className="scalebar" > </div>
         <p id="scalebartag" className = "scalebartag">{distanceScaleText}</p>
       </div>
-  
+            
+     {<div id="lonlat-box" className = "lonlat-box" style={{visibility: scaleBarVisible  ? 'visible' : 'hidden' }}>
+        <p id="lonlat-box-text" className = "lonlat-box-text">{Math.abs(lonText)}&#xb0; {lonEastWest}  {Math.abs(latText)}&#xb0; {latNorthSouth}</p>
+
+      </div>}
+
+
+
 
 </div>
   );

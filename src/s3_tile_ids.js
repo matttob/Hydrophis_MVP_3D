@@ -23,15 +23,15 @@ export default [
     verticalOffset :30},
 
     // {id:"crack_MBES",
-    // temporalGroupID:'ardmucknish_bay',
-    // name: "Ardmucknish Bay",
-    // url:"https://tiletesting.s3.eu-west-2.amazonaws.com/Crack_MBES_13092023_Attempt_2/tileset.json",
+    // temporalGroupID:'ardmucknish_bay_mbes',
+    // name: "Ardmucknish Bay",    
+    // url:"https://tiletesting.s3.eu-west-2.amazonaws.com/Crack_MBES_13092023_Pointcloud/tileset.json",
     // year:2023,
     // description : "Survey Name : Ardmucknish Bay 2023 Multibeam",
     // markerPath : "./trito_circle_marker.png",
     // geojsonPath:'',
     // geoJsonHeightAdjust:'',
-    // verticalOffset :-100},
+    // verticalOffset :30},
 
 
    
