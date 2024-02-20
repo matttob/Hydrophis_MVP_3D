@@ -28,17 +28,17 @@ async function geoJsonTranslateHeight(geoJsonPath,heightAdjust) {
 
 
 var tileMarkerPositions =[]
-
+var CustomSwitcheroptionsPrimary = []
 // Date slider options
-const CustomSwitcheroptionsPrimary = [
+ CustomSwitcheroptionsPrimary = [
   {
-    label:  <div style={{ fontSize: 15,color: 'white', whiteSpace: "nowrap" ,fontFamily: 'Inter'}}>2022</div>,
-    value: 2022,
+    label:  <div style={{ fontSize: 15,color: 'white', whiteSpace: "nowrap" ,fontFamily: 'Inter'}}>2018</div>,
+    value: 2018,
     color: "#32a871"
   },
   {
-    label: <div style={{ fontSize: 15,color: 'white', whiteSpace: "nowrap" ,fontFamily: 'Inter'}}>2023</div>,
-    value: 2023,
+    label: <div style={{ fontSize: 15,color: 'white', whiteSpace: "nowrap" ,fontFamily: 'Inter'}}>2019</div>,
+    value: 2019,
     color: "#32a871"
   }];
 
@@ -157,22 +157,46 @@ function Home() {
           destination: Cartesian3.fromDegrees( -4.041795,  56.683053, 24000000),
         });
 
-        setTimeout(() => {viewer_ref.current.cesiumElement.camera.flyTo({
-          destination: Cartesian3.fromDegrees( -5.4357606670,  56.4569090743, 100),
-        })},1)
+        // setTimeout(() => {viewer_ref.current.cesiumElement.camera.flyTo({
+        //   destination: Cartesian3.fromDegrees( -5.4357606670,  56.4569090743, 10000000),
+        // })},)
 
         
 
               // viewer_ref.current.cesiumElement.camera.flyTo({
-              //   destination : new Cartesian3(-2304817.2435183465, -3639113.128132953, 4688495.013644141),
+              //   destination : Cartesian3.fromDegrees( -5.5716,  56.157  , 650),
 
               //   easingFunction: EasingFunction.QUADRATIC_IN_OUT,
-              //   duration: 10
+              //   duration: 15
               // });
       
-  
+              // viewer_ref.current.cesiumElement.camera.flyTo({
+              //   destination : Cartesian3.fromDegrees( -6.25575,  58.25521  , 1000),
+
+              //   easingFunction: EasingFunction.QUADRATIC_IN_OUT,
+              //   duration: 15
+              // });
+
+
+
+//               // flyTo using QUADRATIC_IN_OUT easing function
+//               viewer_ref.current.cesiumElement.camera.flyTo({
+//   destination : Cartesian3.fromDegrees(-5.5716,  56.157  , 650),
+//   complete: function () {
+//     setTimeout(function () {
+//       viewer_ref.current.cesiumElement.camera.flyTo({
+//         destination : Cartesian3.fromDegrees(-5.57453,  56.15608  ,1),
+//         easingFunction: EasingFunction.QUADRATIC_IN_OUT,
+//         duration: 5
+//       });
+//     }, 1000);
+//   },
+// });
+
+
+
         
-        
+
        // finally show viewer when it has been available to ref  
         setViewerReady(true)
         
@@ -485,8 +509,6 @@ function Home() {
       setIsMarkerHovering(true)
       setIsMarkerInfo(true)
       setMarkerInfoText((viewer_ref.current.cesiumElement.scene.pick(mousePosIn.endPosition).id._name))
-  
-  
     }
     function handleMarkerNoHover() {
       // setDateSliderContainerVis(true)
@@ -507,14 +529,19 @@ function Home() {
     })
   }
 
+  function handleMarkerRightClick(mousePosIn) {  
+    setIsModelInfo({ isModelPaneOpenLeft: true })
+    setModelInfoText((viewer_ref.current.cesiumElement.scene.pick(mousePosIn.position).id._name))
+  }
 
 
   const markerElements = tileMarkerAtt.map(markers => {
     return <Entity 
     key={markers.id}
-    position={Cartesian3.fromDegrees(markers.longitude, markers.latitude,-30)} 
+    position={Cartesian3.fromDegrees(markers.longitude, markers.latitude,50)} 
     name={markers.name}
     onClick = {handleBillboardClick}
+    onRightClick = {handleMarkerRightClick}
     onMouseEnter={handleMarkerHover}
     onMouseLeave={handleMarkerNoHover}
     >
@@ -523,7 +550,9 @@ function Home() {
     <BillboardGraphics 
     image={markers.markerType} 
     scale={0.03} 
-    disableDepthTestDistance={Number.POSITIVE_INFINITY}
+    // disableDepthTestDistance={Number.POSITIVE_INFINITY}
+    disableDepthTestDistance={6500000}
+
     color ={ new Color(1.0, 1.0, 1.0, 1)}
   />
   </Entity>
@@ -601,7 +630,7 @@ function Home() {
     <SlidingPane className =  "model-sliding-pane"
       // closeIcon={<div>Some div containing custom close icon.</div>}
       isOpen={isModelInfo.isModelPaneOpenLeft}
-      title="Model Vital Stats"
+      title="Survey Meta Data"
       from="left"
       width="500px"
       onRequestClose={() => setIsModelInfo({isModelPaneOpenLeft: false })}>

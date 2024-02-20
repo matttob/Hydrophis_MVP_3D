@@ -3,7 +3,7 @@ export default [
     temporalGroupID:'ardmucknish_bay',
     name: "Ardmucknish Bay",
     url:"https://tiletesting.s3.eu-west-2.amazonaws.com/ROV_20x10_Crack_for_Hydrophis_2/tileset.json",
-    year:2023,
+    year:2019,
     description : "Survey Name : Ardmucknish Bay 2023",
     markerPath : "./trito_circle_marker.png",
     geojsonPath:"",
@@ -15,7 +15,7 @@ export default [
     temporalGroupID:'ardmucknish_bay',
     name: "Ardmucknish Bay",
     url:"https://tiletesting.s3.eu-west-2.amazonaws.com/crack_diver_tiles/tileset.json",
-    year:2022,
+    year:2018,
     description : "Survey Name : Ardmucknish Bay 2022",
     markerPath : "./trito_circle_marker.png",
     geojsonPath:"./22_Alcyionium.json",
@@ -31,7 +31,7 @@ export default [
     // markerPath : "./trito_circle_marker.png",
     // geojsonPath:'',
     // geoJsonHeightAdjust:'',
-    // verticalOffset :30},
+    // verticalOffset :5},
 
 
    
@@ -45,7 +45,7 @@ export default [
     markerPath : "./trito_circle_marker.png",
     geojsonPath:"",
     geoJsonHeightAdjust: '',
-    verticalOffset :30},
+    verticalOffset :5},
 
     {id:"broad_bay_control_7",
     temporalGroupID:'',
@@ -56,7 +56,7 @@ export default [
     markerPath : "./trito_circle_marker.png",
     geojsonPath:"",
     geoJsonHeightAdjust: '',
-    verticalOffset :30},
+    verticalOffset :5},
     
 
 
@@ -70,7 +70,7 @@ export default [
     markerPath : "./trito_circle_marker.png",
     geojsonPath:"",
     geoJsonHeightAdjust: '',
-    verticalOffset :30},
+    verticalOffset :5},
 
 
     {id:"broad_bay_t2c",
@@ -82,7 +82,7 @@ export default [
     markerPath : "./trito_circle_marker.png",
     geojsonPath:"",
     geoJsonHeightAdjust: '',
-    verticalOffset :30},
+    verticalOffset :5},
 
 
     {id:"broad_bay_t3a",
@@ -94,7 +94,7 @@ export default [
     markerPath : "./trito_circle_marker.png",
     geojsonPath:"",
     geoJsonHeightAdjust: '',
-    verticalOffset :30},
+    verticalOffset :5},
 
 
 
@@ -107,7 +107,7 @@ export default [
     markerPath : "./trito_circle_marker.png",
     geojsonPath:"",
     geoJsonHeightAdjust: '',
-    verticalOffset :30},
+    verticalOffset :5},
 
 
     {id:"broad_bay_t3c",
@@ -119,7 +119,7 @@ export default [
     markerPath : "./trito_circle_marker.png",
     geojsonPath:"",
     geoJsonHeightAdjust: '',
-    verticalOffset :30},
+    verticalOffset :5},
 
     {id:"broad_bay_t4a",
     temporalGroupID:'',
@@ -252,9 +252,31 @@ export default [
     markerPath : "./trito_circle_marker.png",
     geojsonPath:"",
     geoJsonHeightAdjust: '',
-    verticalOffset :5}
+    verticalOffset :5},
+
+    {id:"lagoon_knoll_2018",
+    temporalGroupID:'lagoon_knoll',
+    name: "Lagoon Knoll",
+    url:"https://tiletesting.s3.eu-west-2.amazonaws.com/2018/tileset.json",
+    year:2018,
+    description : "Survey Name : Lagoon Knoll Chagos 2018 ",
+    markerPath : "./trito_circle_marker.png",
+    geojsonPath:"",
+    geoJsonHeightAdjust: '',
+    verticalOffset :5},
+
+    {id:"lagoon_knoll_2019",
+    temporalGroupID:'lagoon_knoll',
+    name: "Lagoon Knoll",
+    url:"https://tiletesting.s3.eu-west-2.amazonaws.com/2019/tileset.json",
+    year:2019,
+    description : "Survey Name : Lagoon Knoll Chagos 2019 ",
+    markerPath : "./trito_circle_marker.png",
+    geojsonPath:"",
+    geoJsonHeightAdjust: '',
+    verticalOffset :5},
  
- 
+    
  
 
 ]
