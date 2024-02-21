@@ -1,9 +1,9 @@
-#root {
+/* #root {
   height: 100vh;
   width: 100vw
-}
+} */
 
-
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
 .about-main{
   font-size: 18px;
@@ -35,14 +35,18 @@
   bottom: 50%;
   left:50%
 }
-
+/* 
 .map-container{
-  position: absolute; 
-  height: 100vh;
-  width: 100vw;
-  bottom: 0px!important;
-  left:0px;
-}
+  width: 100%;
+  height: 50%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: sans-serif;
+} */
+
+/* .cesiumContainer{
+width: 150%; height:1000px; margin: 0; padding: 0;overflow: hidden} */
 
 .nav-bar{
   position:absolute;

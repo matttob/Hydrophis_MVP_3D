@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef} from 'react'
 
-import {Cesium3DTileStyle,defaultValue,ScreenSpaceEventType,ScreenSpaceEventHandler,Ellipsoid,EasingFunction, Math as CesiumMath,NearFarScalar, Rectangle,ArcGISTiledElevationTerrainProvider,CesiumTerrainProvider,HeadingPitchRoll,Matrix4,Transforms, Cartesian3, Color, viewerCesiumInspectorMixin ,viewerCesium3DTilesInspectorMixin, IonResource, Ion, WebMapServiceImageryProvider, DefaultProxy, WebMapTileServiceImageryProvider, Credit,TextureMinificationFilter, TextureMagnificationFilter,DebugModelMatrixPrimitive,EllipsoidGeodesic,Cartesian2} from 'cesium'
+import {defined,Cesium3DTileStyle,defaultValue,ScreenSpaceEventType,ScreenSpaceEventHandler,Ellipsoid,EasingFunction, Math as CesiumMath,NearFarScalar, Rectangle,ArcGISTiledElevationTerrainProvider,CesiumTerrainProvider,HeadingPitchRoll,Matrix4,Transforms, Cartesian3, Color, viewerCesiumInspectorMixin ,viewerCesium3DTilesInspectorMixin, IonResource, Ion, WebMapServiceImageryProvider, DefaultProxy, WebMapTileServiceImageryProvider, Credit,TextureMinificationFilter, TextureMagnificationFilter,DebugModelMatrixPrimitive,EllipsoidGeodesic,Cartesian2} from 'cesium'
 import { Viewer,Scene, Entity , GeoJsonDataSource, KmlDataSource,CameraFlyTo, Cesium3DTileset,PointGraphics,EntityDescription ,BillboardGraphics,ImageryLayer,useCesium} from 'resium'
 import './app.css'
 import { CustomSwitcher } from 'react-custom-switcher'
@@ -105,6 +105,9 @@ function Home() {
   useEffect(() => {
     setTimeout(() => {
     if (viewer_ref.current && viewer_ref.current.cesiumElement) {
+
+
+
         viewer_ref.current.cesiumElement._cesiumWidget._creditContainer.style.display = "none"
         viewer_ref.current.cesiumElement.animation.container.style.visibility = "hidden"
         viewer_ref.current.cesiumElement.timeline.container.style.visibility = "hidden"
@@ -146,19 +149,28 @@ function Home() {
         globe._translucency._frontFaceAlphaByDistance._nearValue = 1;
         globe._translucency._frontFaceAlphaByDistance._farValue = true
         
-        
-        
-
-        // Position camera
-
-     
+       // Position camera
 
         viewer_ref.current.cesiumElement.camera.flyTo({
           destination: Cartesian3.fromDegrees( -4.041795,  56.683053, 24000000),
         });
 
+
+      // //   // SPIN GLOBE For 1st animation
+      //   var previousTime = Date.now();
+      //   var spinRate = 1.0;
+      //   function applyGlobeSpin() {
+      //     var currentTime = Date.now();
+      //     var delta = ( currentTime - previousTime ) / 1000;
+      //     previousTime = currentTime;
+      //     viewer_ref.current.cesiumElement.scene.camera.rotate(Cartesian3.UNIT_Z, -spinRate * delta);
+      // }
+      //   viewer_ref.current.cesiumElement.clock.onTick.addEventListener(applyGlobeSpin)
+
+ 
+
         // setTimeout(() => {viewer_ref.current.cesiumElement.camera.flyTo({
-        //   destination: Cartesian3.fromDegrees( -5.4357606670,  56.4569090743, 10000000),
+        //   destination: Cartesian3.fromDegrees(  -4.041795,  56.683053, 24000000),
         // })},)
 
         
@@ -167,19 +179,37 @@ function Home() {
               //   destination : Cartesian3.fromDegrees( -5.5716,  56.157  , 650),
 
               //   easingFunction: EasingFunction.QUADRATIC_IN_OUT,
-              //   duration: 15
+              //   duration: 3
               // });
       
               // viewer_ref.current.cesiumElement.camera.flyTo({
               //   destination : Cartesian3.fromDegrees( -6.25575,  58.25521  , 1000),
 
               //   easingFunction: EasingFunction.QUADRATIC_IN_OUT,
-              //   duration: 15
+              //   duration: 3
               // });
 
 
 
-//               // flyTo using QUADRATIC_IN_OUT easing function
+  // // flyTo broad bay then craignish 
+  // viewer_ref.current.cesiumElement.camera.flyTo({
+  //   destination : Cartesian3.fromDegrees(  -6.25575,  58.25521  , 40000),
+  //   easingFunction: EasingFunction.QUADRATIC_IN_OUT,
+  //   duration: 3,
+  //   complete: function () {
+  //     setTimeout(function () {
+  //       viewer_ref.current.cesiumElement.camera.flyTo({
+  //         destination : Cartesian3.fromDegrees(-5.5716,  56.157  , 650),
+  //         easingFunction: EasingFunction.QUADRATIC_IN_OUT,
+  //         duration: 5
+  //       });
+  //     }, 1000);
+  //   },
+  // });
+              
+
+
+// // flyTo sea grass boudndary for 3rd animation 
 //               viewer_ref.current.cesiumElement.camera.flyTo({
 //   destination : Cartesian3.fromDegrees(-5.5716,  56.157  , 650),
 //   complete: function () {
@@ -551,7 +581,7 @@ function Home() {
     image={markers.markerType} 
     scale={0.03} 
     // disableDepthTestDistance={Number.POSITIVE_INFINITY}
-    disableDepthTestDistance={6500000}
+    disableDepthTestDistance={10000000}
 
     color ={ new Color(1.0, 1.0, 1.0, 1)}
   />
@@ -593,8 +623,8 @@ function Home() {
   return (
   <div >
       
-    <div className="map-container" style={{visibility: viewerReady ? 'visible' : 'hidden' }}   >
-      <Viewer skyBox = {false} infoBox={false} ref={viewer_ref}>
+    <div   id="cesiumContainer" class="fullSize" style={{visibility: viewerReady ? 'visible' : 'hidden' }}   >
+      <Viewer full  skyBox = {false} infoBox={false} ref={viewer_ref}>
         <Scene>
           <ImageryLayer
             id = "bathy_imagery_layer"
@@ -609,6 +639,19 @@ function Home() {
         </Scene>
       </Viewer>
 
+      <div id="scale-box" className = "scale-box" style={{visibility: scaleBarVisible  ? 'visible' : 'hidden' }}>
+        <div id="scalebar" className="scalebar" > </div>
+        <p id="scalebartag" className = "scalebartag">{distanceScaleText}</p>
+      </div>
+            
+     {<div id="lonlat-box" className = "lonlat-box" style={{visibility: scaleBarVisible  ? 'visible' : 'hidden' }}>
+        <p id="lonlat-box-text" className = "lonlat-box-text">{Math.abs(lonText)}&#xb0; {lonEastWest}  {Math.abs(latText)}&#xb0; {latNorthSouth}</p>
+    </div>}
+
+    <div className="bathy-checkBox">
+        <Checkbox/>
+    </div>
+
       {dateSliderContainerVis && <div className='date-slider-container'>
       <CustomSwitcher
         className="date-slider"
@@ -619,13 +662,7 @@ function Home() {
       </CustomSwitcher>
       </div>}
 
-    </div>
- 
-  
-   
-    <div className="bathy-checkBox">
-        <Checkbox/>
-    </div>
+     
 
     <SlidingPane className =  "model-sliding-pane"
       // closeIcon={<div>Some div containing custom close icon.</div>}
@@ -638,7 +675,8 @@ function Home() {
     </SlidingPane>
 
 
-      <div className =  "marker-name-div" 
+
+    <div className =  "marker-name-div" 
       style={{visibility: isMarkerInfo  ? 'visible' : 'hidden' ,
       position : 'absolute',
       left : `${JSON.stringify(useMousePosition().x+20)}px`,
@@ -646,16 +684,16 @@ function Home() {
       >
         {markerInfoText} 
       </div>
-      
-      <div id="scale-box" className = "scale-box" style={{visibility: scaleBarVisible  ? 'visible' : 'hidden' }}>
-        <div id="scalebar" className="scalebar" > </div>
-        <p id="scalebartag" className = "scalebartag">{distanceScaleText}</p>
-      </div>
-            
-     {<div id="lonlat-box" className = "lonlat-box" style={{visibility: scaleBarVisible  ? 'visible' : 'hidden' }}>
-        <p id="lonlat-box-text" className = "lonlat-box-text">{Math.abs(lonText)}&#xb0; {lonEastWest}  {Math.abs(latText)}&#xb0; {latNorthSouth}</p>
+    </div>
+ 
+  
+   
 
-      </div>}
+    
+
+
+      
+      
 
 
 
