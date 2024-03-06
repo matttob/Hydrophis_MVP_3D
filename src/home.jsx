@@ -1,49 +1,20 @@
 
 
 import { useState, useEffect, useRef} from 'react'
-
 import {defined,Cesium3DTileStyle,defaultValue,ScreenSpaceEventType,ScreenSpaceEventHandler,Ellipsoid,EasingFunction, Math as CesiumMath,NearFarScalar, Rectangle,ArcGISTiledElevationTerrainProvider,CesiumTerrainProvider,HeadingPitchRoll,Matrix4,Transforms, Cartesian3, Color, viewerCesiumInspectorMixin ,viewerCesium3DTilesInspectorMixin, IonResource, Ion, WebMapServiceImageryProvider, DefaultProxy, WebMapTileServiceImageryProvider, Credit,TextureMinificationFilter, TextureMagnificationFilter,DebugModelMatrixPrimitive,EllipsoidGeodesic,Cartesian2} from 'cesium'
 import { Viewer,Scene, Entity , GeoJsonDataSource, KmlDataSource,CameraFlyTo, Cesium3DTileset,PointGraphics,EntityDescription ,BillboardGraphics,ImageryLayer,useCesium} from 'resium'
 import './app.css'
 import { CustomSwitcher } from 'react-custom-switcher'
 import SlidingPane from "react-sliding-pane";
 import "react-sliding-pane/dist/react-sliding-pane.css";
-import tileset_ids from "./s3_tile_ids.js"
-import * as turf from '@turf/turf'
-
-
-
-
-// // Deal with test geojson file
-async function geoJsonTranslateHeight(geoJsonPath,heightAdjust) {
-  var info = await fetch(geoJsonPath)
-  .then(res => {
-  return res.json();
-  }).then(data => {
-  return data;
-  });
-  return turf.transformTranslate(info, 0, 0, { zTranslation: heightAdjust});
-}
-
-
+import tileset_ids from './s3_tile_ids.js'
+import geoJsonTranslateHeight from './translategeojsonheight.jsx'
+import CustomSwitcheroptionsPrimary from './CustomSwitcheroptionsPrimary.jsx'
 
 var tileMarkerPositions =[]
-var CustomSwitcheroptionsPrimary = []
-// Date slider options
- CustomSwitcheroptionsPrimary = [
-  {
-    label:  <div style={{ fontSize: 15,color: 'white', whiteSpace: "nowrap" ,fontFamily: 'Inter'}}>2018</div>,
-    value: 2018,
-    color: "#32a871"
-  },
-  {
-    label: <div style={{ fontSize: 15,color: 'white', whiteSpace: "nowrap" ,fontFamily: 'Inter'}}>2019</div>,
-    value: 2019,
-    color: "#32a871"
-  }];
 
 //Cesium ion api access tok
-// Ion.defaultAccessToken ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzYjM5M2JiYy03ODhiLTQ2YmUtODhkNC0yNTdlZTQ2Y2RkOGMiLCJpZCI6MTU4OTgxLCJpYXQiOjE2OTY0MzgyNjJ9.4DRtmcWO-nxpnuMP8hNoq8AYgyy3ZQYYfxuZQ_p0W1w";
+Ion.defaultAccessToken ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzYjM5M2JiYy03ODhiLTQ2YmUtODhkNC0yNTdlZTQ2Y2RkOGMiLCJpZCI6MTU4OTgxLCJpYXQiOjE2OTY0MzgyNjJ9.4DRtmcWO-nxpnuMP8hNoq8AYgyy3ZQYYfxuZQ_p0W1w";
 
 // Bathymetry image provider details
 const emodnet_provider = new WebMapServiceImageryProvider({
@@ -623,7 +594,7 @@ function Home() {
   return (
   <div >
       
-    <div   id="cesiumContainer" class="fullSize" style={{visibility: viewerReady ? 'visible' : 'hidden' }}   >
+    <div   id="cesiumContainer" className="fullSize" style={{visibility: viewerReady ? 'visible' : 'hidden' }}   >
       <Viewer full  skyBox = {false} infoBox={false} ref={viewer_ref}>
         <Scene>
           <ImageryLayer
