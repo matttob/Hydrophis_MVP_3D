@@ -9,25 +9,13 @@ import SlidingPane from "react-sliding-pane";
 import "react-sliding-pane/dist/react-sliding-pane.css";
 import tileset_ids from './s3_tile_ids.js'
 import geoJsonTranslateHeight from './translategeojsonheight.jsx'
-
+import CustomSwitcheroptionsPrimary from './customswitcheroptionsprimary.jsx'
 
 
 var tileMarkerPositions =[]
-var CustomSwitcheroptionsPrimary = []
-// Date slider options
- CustomSwitcheroptionsPrimary = [
-  {
-    label:  <div style={{ fontSize: 15,color: 'white', whiteSpace: "nowrap" ,fontFamily: 'Inter'}}>2018</div>,
-    value: 2018,
-    color: "#32a871"
-  },
-  {
-    label: <div style={{ fontSize: 15,color: 'white', whiteSpace: "nowrap" ,fontFamily: 'Inter'}}>2019</div>,
-    value: 2019,
-    color: "#32a871"
-  }];
 
-//Cesium ion api access tok
+
+//Cesium ion api access token
 Ion.defaultAccessToken ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzYjM5M2JiYy03ODhiLTQ2YmUtODhkNC0yNTdlZTQ2Y2RkOGMiLCJpZCI6MTU4OTgxLCJpYXQiOjE2OTY0MzgyNjJ9.4DRtmcWO-nxpnuMP8hNoq8AYgyy3ZQYYfxuZQ_p0W1w";
 
 // Bathymetry image provider details
@@ -140,78 +128,7 @@ function Home() {
           destination: Cartesian3.fromDegrees( -4.041795,  56.683053, 24000000),
         });
 
-
-      // //   // SPIN GLOBE For 1st animation
-      //   var previousTime = Date.now();
-      //   var spinRate = 1.0;
-      //   function applyGlobeSpin() {
-      //     var currentTime = Date.now();
-      //     var delta = ( currentTime - previousTime ) / 1000;
-      //     previousTime = currentTime;
-      //     viewer_ref.current.cesiumElement.scene.camera.rotate(Cartesian3.UNIT_Z, -spinRate * delta);
-      // }
-      //   viewer_ref.current.cesiumElement.clock.onTick.addEventListener(applyGlobeSpin)
-
- 
-
-        // setTimeout(() => {viewer_ref.current.cesiumElement.camera.flyTo({
-        //   destination: Cartesian3.fromDegrees(  -4.041795,  56.683053, 24000000),
-        // })},)
-
         
-
-              // viewer_ref.current.cesiumElement.camera.flyTo({
-              //   destination : Cartesian3.fromDegrees( -5.5716,  56.157  , 650),
-
-              //   easingFunction: EasingFunction.QUADRATIC_IN_OUT,
-              //   duration: 3
-              // });
-      
-              // viewer_ref.current.cesiumElement.camera.flyTo({
-              //   destination : Cartesian3.fromDegrees( -6.25575,  58.25521  , 1000),
-
-              //   easingFunction: EasingFunction.QUADRATIC_IN_OUT,
-              //   duration: 3
-              // });
-
-
-
-  // // flyTo broad bay then craignish 
-  // viewer_ref.current.cesiumElement.camera.flyTo({
-  //   destination : Cartesian3.fromDegrees(  -6.25575,  58.25521  , 40000),
-  //   easingFunction: EasingFunction.QUADRATIC_IN_OUT,
-  //   duration: 3,
-  //   complete: function () {
-  //     setTimeout(function () {
-  //       viewer_ref.current.cesiumElement.camera.flyTo({
-  //         destination : Cartesian3.fromDegrees(-5.5716,  56.157  , 650),
-  //         easingFunction: EasingFunction.QUADRATIC_IN_OUT,
-  //         duration: 5
-  //       });
-  //     }, 1000);
-  //   },
-  // });
-              
-
-
-// // flyTo sea grass boudndary for 3rd animation 
-//               viewer_ref.current.cesiumElement.camera.flyTo({
-//   destination : Cartesian3.fromDegrees(-5.5716,  56.157  , 650),
-//   complete: function () {
-//     setTimeout(function () {
-//       viewer_ref.current.cesiumElement.camera.flyTo({
-//         destination : Cartesian3.fromDegrees(-5.57453,  56.15608  ,1),
-//         easingFunction: EasingFunction.QUADRATIC_IN_OUT,
-//         duration: 5
-//       });
-//     }, 1000);
-//   },
-// });
-
-
-
-        
-
        // finally show viewer when it has been available to ref  
         setViewerReady(true)
         
@@ -402,64 +319,7 @@ function Home() {
         
         setTileMarkerAtt(arrayUniqueByKey)
       
-     
-
-      // //// Test centre of rotation settings
-      //   var transform = Transforms.eastNorthUpToFixedFrame(tileset._root._boundingVolume._boundingSphere.center);
-      if (tileset.featureIdLabel.includes('Survey Name : Ardmucknish Bay 2023 Multibeam')) {
-        const style = [];
-      
-        style.pointSize = defaultValue(style.pointSize, 10);
-       
-
-        tileset._root.tileset.style = new Cesium3DTileStyle(style);
-
-
-        tileset._root._styleApplied = true
-        console.log(tileset._root._styleApplied)
-        console.log(tileset._root )
-   
-    }
-      
-     
-     //   // var cartographicTransform = viewer_ref.current.cesiumElement.scene.globe.ellipsoid.cartesianToCartographic(transform);
-      //   // transform = Matrix4.IDENTITY;
-      //   // transform = computeTransform(cartographicTransform.latitude/ CesiumMath.PI * 180, cartographicTransform.longitude/ CesiumMath.PI * 180, verticalOffset); 
-      //   transform[12] = transform[12] + tileset._root._boundingVolume._boundingSphere.radius
-      //   transform[13] = transform[13]  + tileset._root._boundingVolume._boundingSphere.radius
-      //   transform[14] = transform[14] - 20
-        
-      //   // View in east-north-up frame
-      //   const camera = viewer_ref.current.cesiumElement.camera;
-  
-      //   camera.constrainedAxis = Cartesian3.UNIT_Z;
-      //   camera.lookAtTransform(
-      //     transform,
-      //     new Cartesian3(-1200.0, -1200.0, -100)
-      //   );
-      //   // Show reference frame.  Not required.
-      //   const referenceFramePrimitive = viewer_ref.current.cesiumElement.scene.primitives.add(
-      //   new DebugModelMatrixPrimitive({
-      //   modelMatrix: transform,
-        // length: 100000.0}));
-       
-      
-    // clamp tiles to terrain
-    //     //  let c3d_layers
-    //     //  c3d_layers = viewer_ref.current.cesiumElement.scene.primitives._primitives.filter(pr => pr.constructor.name=='Cesium3DTileset')
-    //     //  console.log(c3d_layers[0]._root._header.transform)
-    //      var heightOffset = 20.0;
-    //      var boundingSphere = tileset.boundingSphere;
-    //      var cartographic = Cesium.Cartographic.fromCartesian(boundingSphere.center);
-    //      var surface = Cesium.Cartesian3.fromRadians(cartographic.longitude, cartographic.latitude, 0.0);
-    //       console.log(surface)
-    //      var offset = Cesium.Cartesian3.fromRadians(cartographic.longitude, cartographic.latitude, heightOffset);
-    //      var translation = Cesium.Cartesian3.subtract(offset, surface, new Cesium.Cartesian3());
-    //      tileset.modelMatrix = Cesium.Matrix4.fromTranslation(translation);
-    //  viewer_ref.current.cesiumElement.scene.clampToHeightMostDetailed(c3d_layers[0]._root._header.boundingVolume)
   };
-
-
 
 
 
