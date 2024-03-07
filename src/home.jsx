@@ -29,24 +29,8 @@ var tileMarkerPositions =[]
 function Home() {
 
   const viewer_ref = useRef(null);
-
   const [viewerReady, setViewerReady] = useState(false)
-  
-
-  function computeTransform(latitude, longitude, height) {
-    var offset = height;
-    var cartesianOffset = Cartesian3.fromDegrees(longitude, latitude, offset);
-    return Transforms.headingPitchRollToFixedFrame(cartesianOffset, new HeadingPitchRoll());
-}
-
-
-
-// Add custom terrain
-  // const customTerrainProvider = new CesiumTerrainProvider({
-  //       url:" http://localhost:8003/tileset.json"
-  //     });
-  
-
+    
   useEffect(() => {
     setTimeout(() => {
     if (viewer_ref.current && viewer_ref.current.cesiumElement) {
@@ -265,11 +249,15 @@ function Home() {
         verticalOffset = -1*tiles.verticalOffset}
       })
     
+
       // Position the tileset
       var position = Matrix4.getTranslation(tileset._root.transform, new Cartesian3());
       var cartographicPosition = viewer_ref.current.cesiumElement.scene.globe.ellipsoid.cartesianToCartographic(position);
       tileset._root.transform = Matrix4.IDENTITY;
-      tileset._root.transform = computeTransform(cartographicPosition.latitude/ CesiumMath.PI * 180, cartographicPosition.longitude/ CesiumMath.PI * 180, verticalOffset); // or set tileset._root.transform directly
+      var cartesianOffset = Cartesian3.fromDegrees(cartographicPosition.longitude/ CesiumMath.PI * 180, cartographicPosition.latitude/ CesiumMath.PI * 180, verticalOffset);
+      tileset._root.transform = Transforms.headingPitchRollToFixedFrame(cartesianOffset, new HeadingPitchRoll())
+      
+    
 
      // add attributes to marker array
       var pos = {}
