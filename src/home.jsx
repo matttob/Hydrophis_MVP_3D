@@ -10,11 +10,7 @@ import "react-sliding-pane/dist/react-sliding-pane.css";
 import tileset_ids from './s3_tile_ids.js'
 import geoJsonTranslateHeight from './translategeojsonheight.jsx'
 import CustomSwitcheroptionsPrimary from './customswitcheroptionsprimary.jsx'
-
-
-var tileMarkerPositions =[]
-
-
+import useMousePosition from './usemouseposition'
 //Cesium ion api access token
 Ion.defaultAccessToken ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzYjM5M2JiYy03ODhiLTQ2YmUtODhkNC0yNTdlZTQ2Y2RkOGMiLCJpZCI6MTU4OTgxLCJpYXQiOjE2OTY0MzgyNjJ9.4DRtmcWO-nxpnuMP8hNoq8AYgyy3ZQYYfxuZQ_p0W1w";
 
@@ -26,35 +22,11 @@ const emodnet_provider = new WebMapServiceImageryProvider({
   minimumLevel: '0',
 });
 
+// declare empty marker location variable 
+var tileMarkerPositions =[]
 
-
-// const terrainProvider = await ArcGISTiledElevationTerrainProvider.fromUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer", {
-//   token: "KED1aF_I4UzXOHy3BnhwyBHU4l5oY6rO6walkmHoYqGp4XyIWUd5YZUC1ZrLAzvV40pR6gBXQayh0eFA8m6vPg.."
-// });
-
-
+// main homepage function
 function Home() {
-
-  const useMousePosition = () => {
-    const [
-      mousePosition,
-      setMousePosition
-    ] = useState({ x: null, y: null });
-  
-    useEffect(() => {
-      const updateMousePosition = ev => {
-        setMousePosition({ x: ev.clientX, y: ev.clientY });
-      };
-      
-      window.addEventListener('mousemove', updateMousePosition);
-  
-      return () => {
-        window.removeEventListener('mousemove', updateMousePosition);
-      };
-    }, []);
-  
-    return mousePosition;}
-
 
   const viewer_ref = useRef(null);
 
