@@ -6,7 +6,6 @@ import { CustomSwitcher } from 'react-custom-switcher'
 import SlidingPane from "react-sliding-pane";
 import "react-sliding-pane/dist/react-sliding-pane.css";
 import tileset_ids from './s3_tile_ids.js'
-import geoJsonTranslateHeight from './translategeojsonheight.jsx'
 import CustomSwitcheroptionsPrimary from './customswitcheroptionsprimary.jsx'
 import useMousePosition from './usemouseposition'
 import updateDistanceScale from './updatedistancescale.jsx'
@@ -14,6 +13,9 @@ import updateHoverLonLat from './updatehoverlonlat.jsx'
 import viewerProperties from './viewerproperties.jsx'
 import emodnet_provider from './bathymetryprovider.js'
 import bathyCheckbox from './components/bathybox.jsx'
+import createMarkerElements from './components/markerelements.jsx'
+import createTileElements from './components/tilesets.jsx'
+import createGeojsonElements from './components/geojsonpolygons.jsx'
 //Cesium ion api access token
 Ion.defaultAccessToken ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzYjM5M2JiYy03ODhiLTQ2YmUtODhkNC0yNTdlZTQ2Y2RkOGMiLCJpZCI6MTU4OTgxLCJpYXQiOjE2OTY0MzgyNjJ9.4DRtmcWO-nxpnuMP8hNoq8AYgyy3ZQYYfxuZQ_p0W1w";
 
@@ -113,11 +115,8 @@ function Home() {
     }
 
 
-
 //  check box state for turning on or off bathymetry image layer 
  const [isChecked, setIsChecked] = useState(false)
-
-
 
   // control info slide out pane on model right click
   const [markerInfoText, setMarkerInfoText] = useState("")
@@ -143,8 +142,6 @@ function Home() {
       setIsMarkerInfo(false)
     }
 
-
-
 // handle marker click
   function handleBillboardClick(mousePosIn) { 
     const findMarker = tileMarkerAtt.map(markers => {
@@ -162,56 +159,12 @@ function Home() {
   }
 
 
-  const markerElements = tileMarkerAtt.map(markers => {
-    return <Entity 
-    key={markers.id}
-    position={Cartesian3.fromDegrees(markers.longitude, markers.latitude,0)} 
-    name={markers.name}
-    onClick = {handleBillboardClick}
-    onRightClick = {handleMarkerRightClick}
-    onMouseEnter={handleMarkerHover}
-    onMouseLeave={handleMarkerNoHover}
-    >
- 
-
-    <BillboardGraphics 
-    image={markers.markerType} 
-    scale={0.03} 
-    // disableDepthTestDistance={Number.POSITIVE_INFINITY}
-    disableDepthTestDistance={10000000}
-
-    color ={ new Color(1.0, 1.0, 1.0, 1)}
-  />
-  </Entity>
-  })
-
-  let sliderShow 
-  const tileSetElements = tileset_ids.map(tiles => {
-    if (tiles.temporalGroupID.length  > 0 )   
-      {if (sliderYear == tiles.year) {sliderShow = true}
-      else {sliderShow = false}}
-    else {sliderShow = true}
-
-
-    return <Cesium3DTileset 
-    key={tiles.id}
-    featureIdLabel={tiles.description}
-    url={tiles.url} 
-    onReady={handleReady_tileset}
-    onMouseEnter={handleHover}
-    onMouseLeave={handleNoHover}
-    onRightClick = {handleModelRightClick}
-    show = {sliderShow}
-    />
-  })
-  const geoJsonElements = tileset_ids.map(geoJsons => {
-    if (geoJsons.geojsonPath.length > 1)  {
-    return  <GeoJsonDataSource data={geoJsonTranslateHeight(geoJsons.geojsonPath,geoJsons.geoJsonHeightAdjust)} 
-    show = {sliderYear == geoJsons.year?  true : false}
-    key={geoJsons.id}/> }
-    else {
-    }
-  })
+  // Create marker components
+  const markerElements = tileMarkerAtt.map(markers => createMarkerElements(markers,handleBillboardClick,handleMarkerRightClick,handleMarkerHover,handleNoHover))
+  // Create 3d tile elements
+  const tileSetElements = tileset_ids.map(tiles => createTileElements(tiles,sliderYear,handleReady_tileset,handleHover,handleNoHover,handleModelRightClick))
+   // Create gejoson elements
+  const geoJsonElements = tileset_ids.map(geoJsons => createGeojsonElements(geoJsons,sliderYear))
 
 
   return (
@@ -280,18 +233,6 @@ function Home() {
       </div>
     </div>
  
-  
-   
-
-    
-
-
-      
-      
-
-
-
-
 </div>
   );
 }
