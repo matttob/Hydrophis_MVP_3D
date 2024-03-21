@@ -16,6 +16,7 @@ import bathyCheckbox from './components/bathybox.jsx'
 import createMarkerElements from './components/markerelements.jsx'
 import createTileElements from './components/tilesets.jsx'
 import createGeojsonElements from './components/geojsonpolygons.jsx'
+import createGeojsonElementsGems from './components/geojsonpolygons_GEMS.jsx'
 //Cesium ion api access token
 Ion.defaultAccessToken ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzYjM5M2JiYy03ODhiLTQ2YmUtODhkNC0yNTdlZTQ2Y2RkOGMiLCJpZCI6MTU4OTgxLCJpYXQiOjE2OTY0MzgyNjJ9.4DRtmcWO-nxpnuMP8hNoq8AYgyy3ZQYYfxuZQ_p0W1w";
 
@@ -24,6 +25,8 @@ var tileMarkerPositions =[]
 
 // main homepage function
 function Home() {
+
+
   // define viewer variable
   const viewer_ref = useRef(null);
   // viewer available state
@@ -43,7 +46,6 @@ function Home() {
   const [scaleBarVisible, setScaleBarVisible] = useState(false)
   if (viewerReady){(updateDistanceScale(viewer_ref,setDistanceScaleText,setScaleBarVisible))}
    
-   
   // lonlat position text 
   const [latText, setLatText] = useState("")
   const [lonText, setLonText] = useState("")
@@ -51,11 +53,9 @@ function Home() {
   const [lonEastWest, setLonEastWest] = useState("")
   if (viewerReady){updateHoverLonLat(viewer_ref,setLatText,setLonText,setLatNorthSouth,setLonEastWest)}
   
-  
   //data set marker attribute state
   const [tileMarkerAtt, setTileMarkerAtt] = useState([])
   
-
  // Needs to be seperated but struggling with the complexity of abstracting all the required functions and variables along with abstracting the tileset elements
   const handleReady_tileset = tileset => {
 
@@ -96,53 +96,46 @@ function Home() {
   const [isModelInfo, setIsModelInfo] = useState({
     isModelInfoPaneOpen: false,
     isModelInfoPaneOpenLeft: false,
-  });
-
+  })
   const handleModelRightClick = (mousePosIn) => {  
     setModelInfoText((viewer_ref.current.cesiumElement.scene.pick(mousePosIn.position).content._tileset.featureIdLabel))
     setIsModelInfo({ isModelPaneOpenLeft: true })
-
-  };
+  }
 
   // control behaviour on model hover currently unused
     const [isHovering, setIsHovering] = useState(false)
     const handleHover = (mousePosIn) => {  
       setIsHovering(true)
-  
     }
     function handleNoHover() {
       setIsHovering(false)
     }
 
-
-//  check box state for turning on or off bathymetry image layer 
- const [isChecked, setIsChecked] = useState(false)
+  //  check box state for turning on or off bathymetry image layer 
+  const [isChecked, setIsChecked] = useState(false)
 
   // control info slide out pane on model right click
   const [markerInfoText, setMarkerInfoText] = useState("")
   const [isMarkerInfo, setIsMarkerInfo] = useState(false);
 
-
   // date slider state visibility based on 
   const [sliderYear, setSliderYear] = useState([2023])
   const [dateSliderContainerVis, setDateSliderContainerVis] = useState(false)
 
-
   // control behaviour on marker hover 
   const [isMarkerHovering, setIsMarkerHovering] = useState(false)
-
-    function handleMarkerHover(mousePosIn) {  
+  function handleMarkerHover(mousePosIn) {  
       setIsMarkerHovering(true)
       setIsMarkerInfo(true)
       setMarkerInfoText((viewer_ref.current.cesiumElement.scene.pick(mousePosIn.endPosition).id._name))
     }
-    function handleMarkerNoHover() {
+  function handleMarkerNoHover() {
       // setDateSliderContainerVis(true)
       setIsMarkerHovering(false)
       setIsMarkerInfo(false)
     }
 
-// handle marker click
+  // handle marker click
   function handleBillboardClick(mousePosIn) { 
     const findMarker = tileMarkerAtt.map(markers => {
     if (viewer_ref.current.cesiumElement.scene.pick(mousePosIn.position).id._name === markers.name)
@@ -158,14 +151,14 @@ function Home() {
     setModelInfoText((viewer_ref.current.cesiumElement.scene.pick(mousePosIn.position).id._name))
   }
 
-
   // Create marker components
-  const markerElements = tileMarkerAtt.map(markers => createMarkerElements(markers,handleBillboardClick,handleMarkerRightClick,handleMarkerHover,handleNoHover))
+  const markerElements = tileMarkerAtt.map(markers => createMarkerElements(markers,handleBillboardClick,handleMarkerRightClick,handleMarkerHover,handleMarkerNoHover))
   // Create 3d tile elements
   const tileSetElements = tileset_ids.map(tiles => createTileElements(tiles,sliderYear,handleReady_tileset,handleHover,handleNoHover,handleModelRightClick))
    // Create gejoson elements
   const geoJsonElements = tileset_ids.map(geoJsons => createGeojsonElements(geoJsons,sliderYear))
-
+   // Create GEMS gejoson elements
+  const geoJsonElementsGems = createGeojsonElementsGems('https://ogc.nature.scot/geoserver/gems/wfs??SERVICE=WFS&VERSION=1.1.0&REQUEST=GetFeature&typeName=gems:maerl_beds_points&cql_filter=YEAR=%271998%27&outputFormat=application/json')
 
   return (
   <div >
@@ -183,6 +176,7 @@ function Home() {
           {viewerReady && markerElements}
           {viewerReady && tileSetElements}
           {viewerReady && geoJsonElements}
+          {/* {viewerReady && geoJsonElementsGems} */}
         </Scene>
       </Viewer>
 
