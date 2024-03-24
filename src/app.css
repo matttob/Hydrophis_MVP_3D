@@ -271,6 +271,13 @@ width: 150%; height:1000px; margin: 0; padding: 0;overflow: hidden} */
   ;
 }
 
+.gems-checkBox{
+  position: absolute;
+  bottom:50px;
+  left:200px;
+  ;
+}
+
 
 .date-slider-container{
   position: absolute;

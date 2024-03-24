@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef} from 'react'
-import {defined,Cesium3DTileStyle,defaultValue,ScreenSpaceEventType,ScreenSpaceEventHandler,Ellipsoid,EasingFunction, Math as CesiumMath,NearFarScalar, Rectangle,ArcGISTiledElevationTerrainProvider,CesiumTerrainProvider,HeadingPitchRoll,Matrix4,Transforms, Cartesian3, Color, viewerCesiumInspectorMixin ,viewerCesium3DTilesInspectorMixin, IonResource, Ion, WebMapServiceImageryProvider, DefaultProxy, WebMapTileServiceImageryProvider, Credit,TextureMinificationFilter, TextureMagnificationFilter,DebugModelMatrixPrimitive,EllipsoidGeodesic,Cartesian2} from 'cesium'
+import {defined,Cesium3DTileStyle,defaultValue,ScreenSpaceEventType,ScreenSpaceEventHandler,Ellipsoid,EasingFunction, Math as CesiumMath,NearFarScalar, Rectangle,ArcGISTiledElevationTerrainProvider,CesiumTerrainProvider,HeadingPitchRoll,Matrix4,Transforms, Cartesian3, Color, viewerCesiumInspectorMixin ,viewerCesium3DTilesInspectorMixin, IonResource, Ion, WebMapServiceImageryProvider, DefaultProxy, WebMapTileServiceImageryProvider, Credit,TextureMinificationFilter, TextureMagnificationFilter,DebugModelMatrixPrimitive,EllipsoidGeodesic,Cartesian2,PointPrimitiveCollection} from 'cesium'
 import { Viewer,Scene, Entity , GeoJsonDataSource, KmlDataSource,CameraFlyTo, Cesium3DTileset,PointGraphics,EntityDescription ,BillboardGraphics,ImageryLayer,useCesium} from 'resium'
 import './app.css'
 import { CustomSwitcher } from 'react-custom-switcher'
@@ -12,13 +12,20 @@ import updateDistanceScale from './updatedistancescale.jsx'
 import updateHoverLonLat from './updatehoverlonlat.jsx'
 import viewerProperties from './viewerproperties.jsx'
 import emodnet_provider from './bathymetryprovider.js'
-import bathyCheckbox from './components/bathybox.jsx'
+import Checkbox from './components/checkbox.jsx'
 import createMarkerElements from './components/markerelements.jsx'
 import createTileElements from './components/tilesets.jsx'
 import createGeojsonElements from './components/geojsonpolygons.jsx'
 import createGeojsonElementsGems from './components/geojsonpolygons_GEMS.jsx'
+import createPointsGems from './components/pointsPrimitiveGEMS.jsx'
+import GEMSwfsUrlPoints from './GEMSPointswfsUrl.jsx'
+import GEMSwfsUrl from './GemsWFSProvider'
 //Cesium ion api access token
 Ion.defaultAccessToken ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzYjM5M2JiYy03ODhiLTQ2YmUtODhkNC0yNTdlZTQ2Y2RkOGMiLCJpZCI6MTU4OTgxLCJpYXQiOjE2OTY0MzgyNjJ9.4DRtmcWO-nxpnuMP8hNoq8AYgyy3ZQYYfxuZQ_p0W1w";
+
+
+// Gems dataset URL for maerl polygons
+
 
 // declare empty marker location variable 
 var tileMarkerPositions =[]
@@ -39,7 +46,11 @@ function Home() {
         viewerProperties(viewer_ref) 
        // finally show viewer when it has been available to ref  
         setViewerReady(true)
+        
+      
       }}, 1); }, []);
+
+  
 
   // Event listener for scale bar
   const [distanceScaleText, setDistanceScaleText] = useState("")
@@ -112,8 +123,12 @@ function Home() {
     }
 
   //  check box state for turning on or off bathymetry image layer 
-  const [isChecked, setIsChecked] = useState(false)
+  const [isBathyChecked, setIsBathyChecked] = useState(false)
+    //  check box state for turning on or off GEMS image layer and markers
+    const [isGemsChecked, setIsGemsChecked] = useState(false)
+if (isGemsChecked)
 
+{createPointsGems(GEMSwfsUrlPoints,viewer_ref)}
   // control info slide out pane on model right click
   const [markerInfoText, setMarkerInfoText] = useState("")
   const [isMarkerInfo, setIsMarkerInfo] = useState(false);
@@ -157,8 +172,9 @@ function Home() {
   const tileSetElements = tileset_ids.map(tiles => createTileElements(tiles,sliderYear,handleReady_tileset,handleHover,handleNoHover,handleModelRightClick))
    // Create gejoson elements
   const geoJsonElements = tileset_ids.map(geoJsons => createGeojsonElements(geoJsons,sliderYear))
-   // Create GEMS gejoson elements
-  const geoJsonElementsGems = createGeojsonElementsGems('https://ogc.nature.scot/geoserver/gems/wfs??SERVICE=WFS&VERSION=1.1.0&REQUEST=GetFeature&typeName=gems:maerl_beds_points&cql_filter=YEAR=%271998%27&outputFormat=application/json')
+  // Create GEMS gejoson elements
+  // const geoJsonElementsGems = createGeojsonElementsGems(wfsUrl)
+  
 
   return (
   <div >
@@ -170,13 +186,23 @@ function Home() {
             id = "bathy_imagery_layer"
             imageryProvider={emodnet_provider}
             magnificationFilter={TextureMagnificationFilter.LINEAR}
-            alpha = {1}
-            show = {isChecked? true : false}
+            alpha = {0.3}
+            show = {isBathyChecked? true : false}
+            colorToAlpha = {Color.WHITE}
+            colorToAlphaThreshold = {0.2}
+          />
+          <ImageryLayer
+            id = "gems_imagery_layer"
+            imageryProvider={GEMSwfsUrl}
+            magnificationFilter={TextureMagnificationFilter.LINEAR}
+            alpha = {0.3}
+            show = {isGemsChecked? true : false}
+            colorToAlpha = {Color.WHITE}
+            colorToAlphaThreshold = {0.2}
           />
           {viewerReady && markerElements}
           {viewerReady && tileSetElements}
           {viewerReady && geoJsonElements}
-          {/* {viewerReady && geoJsonElementsGems} */}
         </Scene>
       </Viewer>
 
@@ -190,7 +216,10 @@ function Home() {
     </div>}
 
     <div className="bathy-checkBox">
-      {bathyCheckbox(isChecked,setIsChecked)}
+      {Checkbox(isBathyChecked,setIsBathyChecked,'Bathymetry')}
+    </div>
+    <div className="gems-checkBox">
+      {Checkbox(isGemsChecked,setIsGemsChecked,'GEMS Maerl')}
     </div>
 
       {dateSliderContainerVis && <div className='date-slider-container'>

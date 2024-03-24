@@ -1,4 +1,4 @@
-export default function bathyCheckbox(isChecked,setIsChecked) {
+export default function bathyCheckbox(isChecked,setIsChecked,checkBoxText) {
     const checkHandler = () => {
         setIsChecked(!isChecked)}
       return (
@@ -9,7 +9,7 @@ export default function bathyCheckbox(isChecked,setIsChecked) {
             checked={isChecked}
             onChange={checkHandler}
           />
-          <label htmlFor="checkbox" style={{ color: 'white' , fontFamily: 'Inter'}}> Bathymetry </label>
+          <label htmlFor="checkbox" style={{ color: 'white' , fontFamily: 'Inter'}}> {checkBoxText} </label>
         </div>
       )
     }
