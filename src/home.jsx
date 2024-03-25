@@ -6,7 +6,7 @@ import { CustomSwitcher } from 'react-custom-switcher'
 import SlidingPane from "react-sliding-pane";
 import "react-sliding-pane/dist/react-sliding-pane.css";
 import tileset_ids from './s3_tile_ids.js'
-import CustomSwitcheroptionsPrimary from './customswitcheroptionsprimary.jsx'
+// import CustomSwitcheroptionsPrimary from './customswitcheroptionsprimary.jsx'
 import useMousePosition from './usemouseposition'
 import updateDistanceScale from './updatedistancescale.jsx'
 import updateHoverLonLat from './updatehoverlonlat.jsx'
@@ -22,6 +22,20 @@ import GEMSwfsUrlPoints from './GEMSPointswfsUrl.jsx'
 import GEMSwfsUrl from './GemsWFSProvider'
 //Cesium ion api access token
 Ion.defaultAccessToken ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzYjM5M2JiYy03ODhiLTQ2YmUtODhkNC0yNTdlZTQ2Y2RkOGMiLCJpZCI6MTU4OTgxLCJpYXQiOjE2OTY0MzgyNjJ9.4DRtmcWO-nxpnuMP8hNoq8AYgyy3ZQYYfxuZQ_p0W1w";
+
+
+// Date slider options
+CustomSwitcheroptionsPrimary = [
+  {
+    label:  <div style={{ fontSize: 15,color: 'white', whiteSpace: "nowrap" ,fontFamily: 'Inter'}}>2018</div>,
+    value: 2018,
+    color: "#32a871"
+  },
+  {
+    label: <div style={{ fontSize: 15,color: 'white', whiteSpace: "nowrap" ,fontFamily: 'Inter'}}>2019</div>,
+    value: 2019,
+    color: "#32a871"
+  }];
 
 // declare empty marker location variable 
 var tileMarkerPositions =[]
