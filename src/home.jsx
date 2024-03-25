@@ -23,10 +23,6 @@ import GEMSwfsUrl from './GemsWFSProvider'
 //Cesium ion api access token
 Ion.defaultAccessToken ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzYjM5M2JiYy03ODhiLTQ2YmUtODhkNC0yNTdlZTQ2Y2RkOGMiLCJpZCI6MTU4OTgxLCJpYXQiOjE2OTY0MzgyNjJ9.4DRtmcWO-nxpnuMP8hNoq8AYgyy3ZQYYfxuZQ_p0W1w";
 
-
-// Gems dataset URL for maerl polygons
-
-
 // declare empty marker location variable 
 var tileMarkerPositions =[]
 
