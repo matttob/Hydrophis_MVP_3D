@@ -25,6 +25,7 @@ Ion.defaultAccessToken ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzYjM5M2
 
 
 // Date slider options
+var CustomSwitcheroptionsPrimary = []
 CustomSwitcheroptionsPrimary = [
   {
     label:  <div style={{ fontSize: 15,color: 'white', whiteSpace: "nowrap" ,fontFamily: 'Inter'}}>2018</div>,
