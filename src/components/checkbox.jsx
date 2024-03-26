@@ -1,4 +1,4 @@
-export default function bathyCheckbox(isChecked,setIsChecked,checkBoxText) {
+export default function Checkbox(isChecked,setIsChecked,checkBoxText) {
     const checkHandler = () => {
         setIsChecked(!isChecked)}
       return (

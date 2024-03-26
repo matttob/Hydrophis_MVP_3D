@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef} from 'react'
-import {defined,Cesium3DTileStyle,defaultValue,ScreenSpaceEventType,ScreenSpaceEventHandler,Ellipsoid,EasingFunction, Math as CesiumMath,NearFarScalar, Rectangle,ArcGISTiledElevationTerrainProvider,CesiumTerrainProvider,HeadingPitchRoll,Matrix4,Transforms, Cartesian3, Color, viewerCesiumInspectorMixin ,viewerCesium3DTilesInspectorMixin, IonResource, Ion, WebMapServiceImageryProvider, DefaultProxy, WebMapTileServiceImageryProvider, Credit,TextureMinificationFilter, TextureMagnificationFilter,DebugModelMatrixPrimitive,EllipsoidGeodesic,Cartesian2,PointPrimitiveCollection} from 'cesium'
+import {defined,Cesium3DTileStyle,defaultValue,ScreenSpaceEventType,ScreenSpaceEventHandler,Ellipsoid,EasingFunction, Math as CesiumMath,NearFarScalar, Rectangle,ArcGISTiledElevationTerrainProvider,CesiumTerrainProvider,HeadingPitchRoll,Matrix4,Transforms, Cartesian3, Color, viewerCesiumInspectorMixin ,viewerCesium3DTilesInspectorMixin, IonResource, Ion, WebMapServiceImageryProvider, DefaultProxy, WebMapTileServiceImageryProvider, Credit,TextureMinificationFilter, TextureMagnificationFilter,DebugModelMatrixPrimitive,EllipsoidGeodesic,Cartesian2,PointPrimitiveCollection,PointPrimitive} from 'cesium'
 import { Viewer,Scene, Entity , GeoJsonDataSource, KmlDataSource,CameraFlyTo, Cesium3DTileset,PointGraphics,EntityDescription ,BillboardGraphics,ImageryLayer,useCesium} from 'resium'
 import './app.css'
 import { CustomSwitcher } from 'react-custom-switcher'
@@ -24,7 +24,7 @@ import GEMSwfsUrl from './GemsWFSProvider'
 Ion.defaultAccessToken ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzYjM5M2JiYy03ODhiLTQ2YmUtODhkNC0yNTdlZTQ2Y2RkOGMiLCJpZCI6MTU4OTgxLCJpYXQiOjE2OTY0MzgyNjJ9.4DRtmcWO-nxpnuMP8hNoq8AYgyy3ZQYYfxuZQ_p0W1w";
 
 
-// Date slider options
+// Date slider options for some reason AWS Amplify was producing erors if these were imported from an external file
 var CustomSwitcheroptionsPrimary = []
 CustomSwitcheroptionsPrimary = [
   {
@@ -38,30 +38,28 @@ CustomSwitcheroptionsPrimary = [
     color: "#32a871"
   }];
 
-// declare empty marker location variable 
-var tileMarkerPositions =[]
+  var GemsPoints = []
 
 // main homepage function
 function Home() {
-
-
+  // declare empty marker location variable 
+  var tileMarkerPositions =[]
   // define viewer variable
   const viewer_ref = useRef(null);
   // viewer available state
   const [viewerReady, setViewerReady] = useState(false)
   // Right now use effect and timeout (only 1ms seems to be required) used in order to wait for viewer_ref to be defined and thus available. Not the most elegant solution!
   useEffect(() => {
-    setTimeout(() => {
+    setTimeout(() =>  {
     if (viewer_ref.current && viewer_ref.current.cesiumElement) {   
         // set some viewer properties
         viewerProperties(viewer_ref) 
+        // Add required point primitives
+        GemsPoints = viewer_ref.current.cesiumElement.scene.primitives.add(new PointPrimitiveCollection());
        // finally show viewer when it has been available to ref  
-        setViewerReady(true)
-        
-      
-      }}, 1); }, []);
-
-  
+        setViewerReady(true)}
+    }, 1) 
+  }, [])
 
   // Event listener for scale bar
   const [distanceScaleText, setDistanceScaleText] = useState("")
@@ -80,7 +78,6 @@ function Home() {
   
  // Needs to be seperated but struggling with the complexity of abstracting all the required functions and variables along with abstracting the tileset elements
   const handleReady_tileset = tileset => {
-
     // match featureIdlabel from tileset to that of tileset object array in order to be able to apply tileset specfic attirbutes
     var verticalOffset
     const tileSetDetails = tileset_ids.map(tiles => {
@@ -96,7 +93,6 @@ function Home() {
      // add attributes to marker array
       var pos = {}
       const tileSetPosition = tileset_ids.map(tiles => {
-    
         if (Object.values(tiles).includes(tileset.featureIdLabel)  ) {
         pos = {"name":tiles.name,
                     "cartoPosition" : position,
@@ -125,21 +121,19 @@ function Home() {
   }
 
   // control behaviour on model hover currently unused
-    const [isHovering, setIsHovering] = useState(false)
-    const handleHover = (mousePosIn) => {  
-      setIsHovering(true)
-    }
-    function handleNoHover() {
-      setIsHovering(false)
-    }
+  const [isHovering, setIsHovering] = useState(false)
+  const handleHover = (mousePosIn) => {  
+    setIsHovering(true)
+  }
+  function handleNoHover() {
+    setIsHovering(false)
+  }
 
   //  check box state for turning on or off bathymetry image layer 
   const [isBathyChecked, setIsBathyChecked] = useState(false)
-    //  check box state for turning on or off GEMS image layer and markers
-    const [isGemsChecked, setIsGemsChecked] = useState(false)
-if (isGemsChecked)
-
-{createPointsGems(GEMSwfsUrlPoints,viewer_ref)}
+  //  check box state for turning on or off GEMS image layer and markers
+  const [isGemsChecked, setIsGemsChecked] = useState(false)
+ 
   // control info slide out pane on model right click
   const [markerInfoText, setMarkerInfoText] = useState("")
   const [isMarkerInfo, setIsMarkerInfo] = useState(false);
@@ -185,8 +179,13 @@ if (isGemsChecked)
   const geoJsonElements = tileset_ids.map(geoJsons => createGeojsonElements(geoJsons,sliderYear))
   // Create GEMS gejoson elements
   // const geoJsonElementsGems = createGeojsonElementsGems(wfsUrl)
-  
-
+  //  create GEMS Points 
+  if (viewerReady) {
+    GemsPoints.show = isGemsChecked
+    if (isGemsChecked) { createPointsGems(GemsPoints,GEMSwfsUrlPoints)}
+   
+  }
+   
   return (
   <div >
       
@@ -271,4 +270,4 @@ if (isGemsChecked)
   );
 }
 
-export default Home;
+export default Home
