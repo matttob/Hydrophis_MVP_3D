@@ -5,21 +5,20 @@ import './app.css'
 import { CustomSwitcher } from 'react-custom-switcher'
 import SlidingPane from "react-sliding-pane";
 import "react-sliding-pane/dist/react-sliding-pane.css";
-import tileset_ids from './s3_tile_ids.js'
+import tileset_ids from './assets/s3_tile_ids.js'
 // import CustomSwitcheroptionsPrimary from './customswitcheroptionsprimary.jsx'
-import useMousePosition from './usemouseposition'
-import updateDistanceScale from './updatedistancescale.jsx'
-import updateHoverLonLat from './updatehoverlonlat.jsx'
-import viewerProperties from './viewerproperties.jsx'
-import emodnet_provider from './bathymetryprovider.js'
+import useMousePosition from './components/usemouseposition.jsx'
+import updateDistanceScale from './components/updatedistancescale.jsx'
+import updateHoverLonLat from './components/updatehoverlonlat.jsx'
+import viewerProperties from './components/viewerproperties.jsx'
+import emodnet_provider from './components/bathymetryprovider.js'
 import Checkbox from './components/checkbox.jsx'
 import createMarkerElements from './components/markerelements.jsx'
 import createTileElements from './components/tilesets.jsx'
 import createGeojsonElements from './components/geojsonpolygons.jsx'
-import createGeojsonElementsGems from './components/geojsonpolygons_GEMS.jsx'
 import createPointsGems from './components/pointsPrimitiveGEMS.jsx'
-import GEMSwfsUrlPoints from './GEMSPointswfsUrl.jsx'
-import GEMSwfsUrl from './GemsWFSProvider'
+import GEMSwfsUrlPoints from './components/GEMSPointswfsUrl.jsx'
+import GEMSwfsUrl from './components/GemsWFSProvider.js'
 //Cesium ion api access token
 Ion.defaultAccessToken ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzYjM5M2JiYy03ODhiLTQ2YmUtODhkNC0yNTdlZTQ2Y2RkOGMiLCJpZCI6MTU4OTgxLCJpYXQiOjE2OTY0MzgyNjJ9.4DRtmcWO-nxpnuMP8hNoq8AYgyy3ZQYYfxuZQ_p0W1w";
 
@@ -177,13 +176,11 @@ function Home() {
   const tileSetElements = tileset_ids.map(tiles => createTileElements(tiles,sliderYear,handleReady_tileset,handleHover,handleNoHover,handleModelRightClick))
    // Create gejoson elements
   const geoJsonElements = tileset_ids.map(geoJsons => createGeojsonElements(geoJsons,sliderYear))
-  // Create GEMS gejoson elements
-  // const geoJsonElementsGems = createGeojsonElementsGems(wfsUrl)
+
   //  create GEMS Points 
   if (viewerReady) {
     GemsPoints.show = isGemsChecked
     if (isGemsChecked) { createPointsGems(GemsPoints,GEMSwfsUrlPoints)}
-   
   }
    
   return (
