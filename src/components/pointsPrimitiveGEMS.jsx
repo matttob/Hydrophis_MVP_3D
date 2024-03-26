@@ -14,7 +14,7 @@ export default function createPointsGems(points,GEMSwfsUrlPoints)
        point.geometry.coordinates[2] = 5
        points.add({
         position : Cartesian3.fromDegrees(point.geometry.coordinates[0], point.geometry.coordinates[1],point.geometry.coordinates[2]),
-        color : Color.CYAN,
+        color : Color.PINK,
        
     })}
    })

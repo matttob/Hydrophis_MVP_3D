@@ -17,8 +17,8 @@ import createMarkerElements from './components/markerelements.jsx'
 import createTileElements from './components/tilesets.jsx'
 import createGeojsonElements from './components/geojsonpolygons.jsx'
 import createPointsGems from './components/pointsPrimitiveGEMS.jsx'
-import GEMSwfsUrlPoints from './components/GEMSPointswfsUrl.jsx'
-import GEMSwfsUrl from './components/GemsWFSProvider.js'
+import GEMSwfsUrlPoints from './assets/GEMSPointswfsUrl.jsx'
+import GEMSwfsUrl from './assets/GemsWFSProvider.js'
 //Cesium ion api access token
 Ion.defaultAccessToken ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzYjM5M2JiYy03ODhiLTQ2YmUtODhkNC0yNTdlZTQ2Y2RkOGMiLCJpZCI6MTU4OTgxLCJpYXQiOjE2OTY0MzgyNjJ9.4DRtmcWO-nxpnuMP8hNoq8AYgyy3ZQYYfxuZQ_p0W1w";
 
