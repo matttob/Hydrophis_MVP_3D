@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef} from 'react'
-import {defined,Cesium3DTileStyle,defaultValue,ScreenSpaceEventType,ScreenSpaceEventHandler,Ellipsoid,EasingFunction, Math as CesiumMath,NearFarScalar, Rectangle,ArcGISTiledElevationTerrainProvider,CesiumTerrainProvider,HeadingPitchRoll,Matrix4,Transforms, Cartesian3, Color, viewerCesiumInspectorMixin ,viewerCesium3DTilesInspectorMixin, IonResource, Ion, WebMapServiceImageryProvider, DefaultProxy, WebMapTileServiceImageryProvider, Credit,TextureMinificationFilter, TextureMagnificationFilter,DebugModelMatrixPrimitive,EllipsoidGeodesic,Cartesian2,PointPrimitiveCollection,PointPrimitive} from 'cesium'
+import {defined,Cesium3DTileStyle,defaultValue,ScreenSpaceEventType,ScreenSpaceEventHandler,Ellipsoid,EasingFunction, Math as CesiumMath,NearFarScalar, Rectangle,ArcGISTiledElevationTerrainProvider,CesiumTerrainProvider,HeadingPitchRoll,Matrix4,Transforms, Cartesian3, Color, viewerCesiumInspectorMixin ,viewerCesium3DTilesInspectorMixin, IonResource, Ion, WebMapServiceImageryProvider, DefaultProxy, WebMapTileServiceImageryProvider, Credit,TextureMinificationFilter, TextureMagnificationFilter,DebugModelMatrixPrimitive,EllipsoidGeodesic,Cartesian2,PointPrimitiveCollection,PointPrimitive,createGooglePhotorealistic3DTileset} from 'cesium'
 import { Viewer,Scene, Entity , GeoJsonDataSource, KmlDataSource,CameraFlyTo, Cesium3DTileset,PointGraphics,EntityDescription ,BillboardGraphics,ImageryLayer,useCesium} from 'resium'
 import './app.css'
 import { CustomSwitcher } from 'react-custom-switcher'
@@ -19,6 +19,7 @@ import createGeojsonElements from './components/geojsonpolygons.jsx'
 import createPointsGems from './components/pointsPrimitiveGEMS.jsx'
 import GEMSwfsUrlPoints from './assets/GEMSPointswfsUrl.jsx'
 import GEMSwfsUrl from './assets/GemsWFSProvider.js'
+import createCustomTerrain from './components/createCustomTerrain.jsx'
 //Cesium ion api access token
 Ion.defaultAccessToken ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzYjM5M2JiYy03ODhiLTQ2YmUtODhkNC0yNTdlZTQ2Y2RkOGMiLCJpZCI6MTU4OTgxLCJpYXQiOjE2OTY0MzgyNjJ9.4DRtmcWO-nxpnuMP8hNoq8AYgyy3ZQYYfxuZQ_p0W1w";
 
@@ -54,11 +55,19 @@ function Home() {
         // set some viewer properties
         viewerProperties(viewer_ref) 
         // Add required point primitives
+        // Add required point primitives
         GemsPoints = viewer_ref.current.cesiumElement.scene.primitives.add(new PointPrimitiveCollection());
+        createCustomTerrain(viewer_ref)
+
+    
+
        // finally show viewer when it has been available to ref  
         setViewerReady(true)}
     }, 1) 
   }, [])
+
+
+  
 
   // Event listener for scale bar
   const [distanceScaleText, setDistanceScaleText] = useState("")
@@ -187,7 +196,7 @@ function Home() {
   <div >
       
     <div   id="cesiumContainer" className="fullSize" style={{visibility: viewerReady ? 'visible' : 'hidden' }}   >
-      <Viewer full  skyBox = {false} infoBox={false} ref={viewer_ref}>
+      <Viewer full skyBox = {false} infoBox={false} ref={viewer_ref}>
         <Scene>
           <ImageryLayer
             id = "bathy_imagery_layer"
@@ -210,6 +219,9 @@ function Home() {
           {viewerReady && markerElements}
           {viewerReady && tileSetElements}
           {viewerReady && geoJsonElements}
+        
+          
+          
         </Scene>
       </Viewer>
 

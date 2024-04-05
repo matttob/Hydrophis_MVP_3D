@@ -275,7 +275,17 @@ export default [
     geojsonPath:"",
     geoJsonHeightAdjust: '',
     verticalOffset :5},
- 
+
+    {id:"SSF_Shetland_T1_2023",
+    temporalGroupID:'SSF_Shetland_2023',
+    name: "SSF Shetland T1",
+    url:"https://tiletesting.s3.eu-west-2.amazonaws.com/T1/tileset.json",
+    year:2023,
+    description : "Survey Name : SSF Shetland T1 ",
+    markerPath : "./trito_circle_marker.png",
+    geojsonPath:"",
+    geoJsonHeightAdjust: '',
+    verticalOffset :5}
     
  
 
