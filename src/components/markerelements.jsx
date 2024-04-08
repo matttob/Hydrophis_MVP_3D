@@ -19,7 +19,7 @@
     image={markers.markerType} 
     scale={0.03} 
     // disableDepthTestDistance={Number.POSITIVE_INFINITY}
-    disableDepthTestDistance={10000000}
+    disableDepthTestDistance={6000000}
 
     color ={ new Color(1.0, 1.0, 1.0, 1)}
   />
