@@ -20,6 +20,7 @@ import createPointsGems from './components/pointsPrimitiveGEMS.jsx'
 import GEMSwfsUrlPoints from './assets/GEMSPointswfsUrl.jsx'
 import GEMSwfsUrl from './assets/GemsWFSProvider.js'
 import createCustomTerrain from './components/createCustomTerrain.jsx'
+import barraMearlLegend from './components/barraMearlLegend.jsx'
 //Cesium ion api access token
 Ion.defaultAccessToken ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzYjM5M2JiYy03ODhiLTQ2YmUtODhkNC0yNTdlZTQ2Y2RkOGMiLCJpZCI6MTU4OTgxLCJpYXQiOjE2OTY0MzgyNjJ9.4DRtmcWO-nxpnuMP8hNoq8AYgyy3ZQYYfxuZQ_p0W1w";
 
@@ -141,7 +142,9 @@ function Home() {
   const [isBathyChecked, setIsBathyChecked] = useState(false)
   //  check box state for turning on or off GEMS image layer and markers
   const [isGemsChecked, setIsGemsChecked] = useState(false)
- 
+   //  check box state for turning on or off barra SSF shape file data
+   const [isBarraChecked, setIsBarraChecked] = useState(false)
+
   // control info slide out pane on model right click
   const [markerInfoText, setMarkerInfoText] = useState("")
   const [isMarkerInfo, setIsMarkerInfo] = useState(false);
@@ -218,8 +221,10 @@ function Home() {
           />
           {viewerReady && markerElements}
           {viewerReady && tileSetElements}
-          {viewerReady && geoJsonElements}
-        
+          {viewerReady && isBarraChecked  &&  geoJsonElements}
+          {viewerReady && isBarraChecked  &&  barraMearlLegend()}
+
+          
           
           
         </Scene>
@@ -239,6 +244,9 @@ function Home() {
     </div>
     <div className="gems-checkBox">
       {Checkbox(isGemsChecked,setIsGemsChecked,'GEMS Maerl')}
+    </div>
+    <div className="barra-checkBox">
+      {Checkbox(isBarraChecked,setIsBarraChecked,'Barra Maerl')}
     </div>
 
       {dateSliderContainerVis && <div className='date-slider-container'>

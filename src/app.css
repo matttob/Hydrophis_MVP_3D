@@ -278,6 +278,35 @@ width: 150%; height:1000px; margin: 0; padding: 0;overflow: hidden} */
   ;
 }
 
+.barra-checkBox{
+  position: absolute;
+  bottom:50px;
+  left:350px;
+  ;
+}
+
+
+.barralegend {
+  font-family: 'Inter';
+  color : white!important;
+  position: absolute;
+  bottom:70px;
+  left:344px;
+  font-family: Arial, sans-serif;
+  background-color: none;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  max-width: 200px;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+.legend-color {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px}
 
 .date-slider-container{
   position: absolute;
