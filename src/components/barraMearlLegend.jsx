@@ -4,13 +4,13 @@ export default function barraMearlLegend()
 return (
 <div className="barralegend" id="mapLegend">
   <div className="legend-item">
-    <div className="legend-color" style={{ backgroundColor: 'grey'}}></div>
+    <div className="legend-color" style={{ backgroundColor: '#A9A9A9'}}></div>
     <div>Bedrock</div>
   </div>
-  <div className="legend-item">
+  {/* <div className="legend-item">
     <div className="legend-color" style={{ backgroundColor: ' #FFE4C4'}}></div>
     <div> &lt; 5% Maerl</div>
-  </div>
+  </div> */}
   <div className="legend-item">
     <div className="legend-color"  style={{ backgroundColor: 'pink'}}></div>
     <div>&lt; 25% Maerl</div>

@@ -17,7 +17,7 @@ import createMarkerElements from './components/markerelements.jsx'
 import createTileElements from './components/tilesets.jsx'
 import createGeojsonElements from './components/geojsonpolygons.jsx'
 import createPointsGems from './components/pointsPrimitiveGEMS.jsx'
-import GEMSwfsUrlPoints from './assets/GEMSPointswfsUrl.jsx'
+import GEMSwfsUrlPoints from './assets/GEMSPointswfsUrl.jsx' 
 import GEMSwfsUrl from './assets/GemsWFSProvider.js'
 import createCustomTerrain from './components/createCustomTerrain.jsx'
 import barraMearlLegend from './components/barraMearlLegend.jsx'
@@ -54,7 +54,7 @@ function Home() {
     setTimeout(() =>  {
     if (viewer_ref.current && viewer_ref.current.cesiumElement) {   
         // set some viewer properties
-        viewerProperties(viewer_ref) 
+        viewerProperties(viewer_ref,setIsGemsChecked,setIsBathyChecked,setIsBarraChecked, setDateSliderContainerVis,setSliderYear) 
         // Add required point primitives
         // Add required point primitives
         GemsPoints = viewer_ref.current.cesiumElement.scene.primitives.add(new PointPrimitiveCollection());
@@ -63,7 +63,8 @@ function Home() {
     
 
        // finally show viewer when it has been available to ref  
-        setViewerReady(true)}
+        setViewerReady(true)
+      }
     }, 1) 
   }, [])
 
@@ -150,7 +151,7 @@ function Home() {
   const [isMarkerInfo, setIsMarkerInfo] = useState(false);
 
   // date slider state visibility based on 
-  const [sliderYear, setSliderYear] = useState([2023])
+  const [sliderYear, setSliderYear] = useState([2018])
   const [dateSliderContainerVis, setDateSliderContainerVis] = useState(false)
 
   // control behaviour on marker hover 
@@ -222,7 +223,8 @@ function Home() {
           {viewerReady && markerElements}
           {viewerReady && tileSetElements}
           {viewerReady && isBarraChecked  &&  geoJsonElements}
-          {viewerReady && isBarraChecked  &&  barraMearlLegend()}
+          
+          {/* {viewerReady && isBarraChecked  &&  barraMearlLegend()} */}
 
           
           
@@ -239,7 +241,7 @@ function Home() {
         <p id="lonlat-box-text" className = "lonlat-box-text">{Math.abs(lonText)}&#xb0; {lonEastWest}  {Math.abs(latText)}&#xb0; {latNorthSouth}</p>
     </div>}
 
-    <div className="bathy-checkBox">
+    {/* <div className="bathy-checkBox">
       {Checkbox(isBathyChecked,setIsBathyChecked,'Bathymetry')}
     </div>
     <div className="gems-checkBox">
@@ -247,7 +249,7 @@ function Home() {
     </div>
     <div className="barra-checkBox">
       {Checkbox(isBarraChecked,setIsBarraChecked,'Barra Maerl')}
-    </div>
+    </div> */}
 
       {dateSliderContainerVis && <div className='date-slider-container'>
       <CustomSwitcher
